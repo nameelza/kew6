@@ -13,3 +13,7 @@ with open("filename.csv", "r") as file:
 	for row in reader:
 		house = row[1]
 		houses[house] += 1
+
+for house in houses:
+	print(f"{house}: {houses[house]}")
+	
