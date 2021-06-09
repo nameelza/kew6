@@ -39,15 +39,11 @@ if sum % 10 != 0:
 	print("INVALID\n")
 	exit()
 
-
 # All American Express numbers start with 34 or 37
 # Most MasterCard numbers start with 51, 52, 53, 54, or 55
 # Visa numbers start with 4
 
-# Check for starting 
-print(length)
-print(number[0])
-print(number[1])
+# Check for starting
 
 if number.startswith(("34", "37")) and length == 15:
 	print("AMEX\n")
@@ -60,13 +56,6 @@ if number[0] == "5" and 1 <= int(number[1]) <= 5 and length == 16:
 if number.startswith(("4")) and length in [13, 16]:
 	print("VISA\n")
 	exit()
-	
-
-
-
-
-
-
 
 
 
