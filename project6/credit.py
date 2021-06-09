@@ -46,15 +46,15 @@ if sum % 10 != 0:
 # Check for starting
 
 if number.startswith(("34", "37")) and length == 15:
-	print("AMEX\n")
+	print("AMEX")
 	exit()
 
 if number[0] == "5" and 1 <= int(number[1]) <= 5 and length == 16:
-	print("MASTERCARD\n")
+	print("MASTERCARD")
 	exit()
 
 if number.startswith(("4")) and length in [13, 16]:
-	print("VISA\n")
+	print("VISA")
 	exit()
 
 
