@@ -53,11 +53,11 @@ def count(dna, value):
 
 	l = len(value)
 
-	for i in range (len(dna)):
-		if dna[i : i + l] == value:
+	for i in range(len(dna)):
+		if dna[i:i + l] == value:
 			temp += 1
 			for j in range(i + l, len(dna), + l):
-				if dna[j : j + l] == value:
+				if dna[j:j + l] == value:
 					temp += 1
 				else:
 					if temp > counts:
