@@ -49,3 +49,47 @@ sqlite> SELECT UPPER(title), COUNT(title) FROM shows GROUP BY UPPER(title);
 
 
 
+sqlite> SELECT UPPER(title), COUNT(title) FROM shows GROUP BY UPPER(title) ORDER BY COUNT(title);
+...
+"THE OFFICE",23
+FRIENDS,26
+"GAME OF THRONES",33
+
+
+sqlite> SELECT UPPER(title), COUNT(title) FROM shows GROUP BY UPPER(title) ORDER BY COUNT(title) DESC LIMIT 10;
+UPPER(title),COUNT(title)
+"GAME OF THRONES",33
+FRIENDS,26
+"THE OFFICE",23
+...
+
+
+sqlite> SELECT UPPER(TRIM(title)), COUNT(title) FROM shows GROUP BY UPPER(TRIM(title)) ORDER BY COUNT(title) DESC LIMIT 10;
+UPPER(title),COUNT(title)
+"GAME OF THRONES",33
+FRIENDS,26
+"THE OFFICE",23
+...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
