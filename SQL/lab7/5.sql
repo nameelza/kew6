@@ -1,0 +1,1 @@
+SELECT SUM(energy) FROM songs;
