@@ -1,1 +1,1 @@
-SELECT SUM(energy) FROM songs;
+SELECT AVG(energy) FROM songs;
