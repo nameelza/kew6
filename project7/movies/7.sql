@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT movies.title, ratings.rating FROM movies, ratings WHERE year = 2010 AND movies.id = ratings.movie_id ORDER BY title) ORDER BY rating;
