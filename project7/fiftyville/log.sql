@@ -16,6 +16,8 @@ SELECT * FROM people WHERE phone_number IN (SELECT caller FROM phone_calls WHERE
 
 SELECT * FROM (SELECT * FROM people WHERE id IN (SELECT person_id FROM bank_accounts WHERE account_number IN (SELECT account_number FROM atm_transactions WHERE atm_location LIKE "%Fifer Street%" AND month = 7 AND day = 28))) WHERE phone_number IN (SELECT caller FROM phone_calls WHERE duration <= 60 AND month = 7 AND day = 28);
 
+-- We got 5 suspects now
+
 395717|Bobby|(826) 555-1652|9878712108|30G67EN
 438727|Victoria|(338) 555-6650|9586786673|8X428L0
 449774|Madison|(286) 555-6063|1988161715|1106N58
@@ -25,6 +27,9 @@ SELECT * FROM (SELECT * FROM people WHERE id IN (SELECT person_id FROM bank_acco
 
 
 SELECT * FROM (SELECT * FROM (SELECT * FROM people WHERE id IN (SELECT person_id FROM bank_accounts WHERE account_number IN (SELECT account_number FROM atm_transactions WHERE atm_location LIKE "%Fifer Street%" AND month = 7 AND day = 28))) WHERE phone_number IN (SELECT caller FROM phone_calls WHERE duration <= 60 AND month = 7 AND day = 28)) WHERE license_plate IN (SELECT license_plate FROM courthouse_security_logs WHERE hour < 11 AND month = 7 AND day = 28);
+
+-- Got 3 suspects now
+
 449774|Madison|(286) 555-6063|1988161715|1106N58
 514354|Russell|(770) 555-1861|3592750733|322W7JE
 686048|Ernest|(367) 555-5533|5773159633|94KL13X
@@ -79,7 +84,7 @@ FROM people
 INNER JOIN passengers ON passengers.passport_number = people.passport_number
 INNER JOIN flights ON flights.id = passengers.flight_id
 INNER JOIN airports ON airports.id = flights.destination_airport_id
-WHERE people.name = "Madison";
+WHERE people.id IN (SELECT id FROM (SELECT * FROM (SELECT * FROM people WHERE id IN (SELECT person_id FROM bank_accounts WHERE account_number IN (SELECT account_number FROM atm_transactions WHERE atm_location LIKE "%Fifer Street%" AND month = 7 AND day = 28))) WHERE phone_number IN (SELECT caller FROM phone_calls WHERE duration <= 60 AND month = 7 AND day = 28)) WHERE license_plate IN (SELECT license_plate FROM courthouse_security_logs WHERE hour < 11 AND month = 7 AND day = 28));
 
 -- CHECKING DESTINATION AIRPORT OF THE MAIN SUSPECT
 
@@ -88,13 +93,24 @@ SELECT people.name, flights.year, flights.month, flights.day, flights.hour, flig
    ...> INNER JOIN passengers ON passengers.passport_number = people.passport_number
    ...> INNER JOIN flights ON flights.id = passengers.flight_id
    ...> INNER JOIN airports ON airports.id = flights.destination_airport_id
-   ...> WHERE people.name = "Madison";
+   ...> WHERE people.name = "Ernest";
 
-SELECT * FROM phone_calls WHERE caller IN (SELECT phone_number FROM people WHERE name = "Madison") AND day = 28 AND duration < 60;
+SELECT * FROM phone_calls WHERE caller IN (SELECT phone_number FROM people WHERE name = "Ernest");
 
 -- NAME OF THE ACCOMPLICE
-SELECT name FROM people WHERE phone_number IN (SELECT receiver FROM phone_calls WHERE caller IN (SELECT phone_number FROM people WHERE name = "Madison") AND day = 28 AND duration < 60); 
+SELECT name FROM people WHERE phone_number IN (SELECT receiver FROM phone_calls WHERE caller IN (SELECT phone_number FROM people WHERE name = "Ernest") AND day = 28 AND duration < 60); 
 
 
+
+
+SELECT people.name, flights.year, flights.month, flights.day, flights.hour, flights.minute, airports.city, airports.full_name
+FROM people
+INNER JOIN passengers ON passengers.passport_number = people.passport_number
+INNER JOIN flights ON flights.id = passengers.flight_id
+INNER JOIN airports ON airports.id = flights.destination_airport_id
+WHERE people.name = "Ernest";
+
+
+SELECT name FROM people WHERE phone_number IN (SELECT receiver FROM phone_calls WHERE caller IN (SELECT phone_number FROM people WHERE name = "Ernest") AND day = 28 AND duration < 60); 
 
 
