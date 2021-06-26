@@ -3,25 +3,28 @@
 <head>
 	<title>Test</title>
 	<style type="text/css">
-		h1 {
+		form {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			height: 200px;
+			border-radius: 20px;
 			background: lightgreen;
-		}
-		span {
-			background: lightpink;
+			box-shadow: 5px 10px 5px #c9c7c7;
 		}
 	</style>
 </head>
 <body>
-	<form onsubmit="print()">
-		<input type="text" name="username" placeholder="Username">
+	<form onsubmit="greet(); return false"> <!-- return false == call the function,but don't submit the form anywhere -->
+		<input type="text" name="name" placeholder="Your name">
 		<br>
-		<input type="password" name="password" placeholder="Password">
-		<input type="submit" name="">
+		<input type="submit">
 	</form>
 	
 <script type="text/javascript">
-	function print() {
-		console.log('SUBMIT LIZA')
+	function greet() {
+		alert("hello")
 	}
 </script>
 </body>
