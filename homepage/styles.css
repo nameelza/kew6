@@ -12,9 +12,18 @@ header {
 	justify-content: center;
 }
 
+.text1 {
+	margin-bottom: 16.8px;
+}
 .text2 {
 	text-align: center;
 	margin-left: 20%;
 	margin-right: 20%;
 	font-size: 10pt;
+	margin-top: 16px;
+}
+
+.imagesun {
+	margin-top: 2%;
+	margin-bottom: 1%;
 }
