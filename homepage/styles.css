@@ -7,13 +7,13 @@ body {
 	background: tomato;
 }
 
-.logo {
+.logo, .footerlogo {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.logo img {
+.logo img, .footerlogo img {
 	width: 300px;
 }
 
@@ -89,8 +89,8 @@ body {
 	overflow: hidden;
 }
 
-.imagebike {
-	width="20%";
+.imagebike img {
+	width:20%;
 	margin-top: 20px;
 }
 
@@ -104,8 +104,8 @@ body {
 	display: flex;
 	vertical-align: top; 
 	justify-content: space-between;
-	padding-top: 20px;
 	margin: 0 20% 0 20%;
+	padding: 34px 0px 100px 0px;
 }
 
 
@@ -142,6 +142,64 @@ body {
 }
 
 .prefooter {
-	height:500px;
+	height:400px;
 	background-color: #2E3740;
+	padding-top: 17px;
+}
+
+.prefooter p{
+	font-family: "brandon-grotesque";
+    font-size: 16px;
+    line-height: 1.6em;
+    letter-spacing: 0px;
+    font-weight: 400;
+	color: #e0cf9d;
+	text-align: center;
+	font-style: italic;
+	padding-top: 17px;
+}
+
+.prefooter h6 {
+	font-family: "brandon-grotesque";
+    font-size: 14px;
+    line-height: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 900;
+    font-style: normal;
+	text-align: center;
+	color: #ad976b;
+	margin: 1.5em auto .3em;
+}
+
+.footer {
+	height: 150px;
+	background-color: #e0cf9d;
+	padding: 34px;
+}
+
+.footer p{
+	font-family: "brandon-grotesque";
+    font-size: 12px;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    font-weight: 400;
+    font-style: normal;
+    color: #2e3740;
+	text-align: center;
+	line-height: 1.6em;
+}
+
+.footer h6 {
+	color: #2e3740;
+	text-align: center;
+	margin: 2em auto .3em;
+	font-family: "brandon-grotesque";
+    font-size: 14px;
+    line-height: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 900;
+    font-style: normal;
 }
