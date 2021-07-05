@@ -230,16 +230,14 @@ body {
 
 .coffeemenu {
 	display: flex;
+	flex-wrap: wrap;
 	vertical-align: top; 
 	justify-content: space-around;
 	margin: 0px 180px;
 	padding: 17px;
 }
 
-/* .coffeemenu .column:not(:last-child) {
-	margin-right: 10%;
-} */
-.coffeemenu .row {
+.row {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -299,4 +297,56 @@ body {
     margin-inline-end: 0px;
 }
 
+.addson {
+	display: flex;
+	justify-content:space-around;
+	align-items: center;
+	margin: 0px 180px;
+	padding: 17px;
+}
 
+.addson_img {
+	width: 50%;
+	height: 250px;
+}
+
+.addson_img img {
+	width: 100%;
+	height: 250px;
+	object-fit: cover;
+	object-position: 0% -20px;
+}
+
+.column {
+	vertical-align: top;
+}
+
+.menutext2 p{
+	font-family: "brandon-grotesque";
+	letter-spacing: 0px;
+    font-weight: 400;
+    font-style: normal;
+    color: rgba(0,0,0,.6);
+	font-size: 16px;
+    line-height: 1.4em;
+	text-align: center;
+	margin-bottom: 32;
+	margin-top: 0;
+}
+
+.eats {
+	display: flex;
+	flex-wrap: wrap;
+	vertical-align: top; 
+	justify-content: space-around;
+	margin: 0px 180px;
+	padding: 17px;
+}
+
+.eats .row h3{
+	margin-right: 200px;
+}
+
+.eats .column .row p{
+	margin-right: 6em;
+}
