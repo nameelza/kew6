@@ -204,6 +204,10 @@ body {
     font-style: normal;
 }
 
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
 /* MENU.HTML */
 
 .menutext1 h1 {
@@ -341,12 +345,13 @@ body {
 	justify-content: space-around;
 	margin: 0px 180px;
 	padding: 17px;
+	margin-bottom: 100px;
 }
 
 .eats .row h3{
 	margin-right: 200px;
 }
 
-.eats .column .row p{
-	margin-right: 6em;
+.eats h5, .addson h5 {
+	margin-bottom: 13.6px;
 }
