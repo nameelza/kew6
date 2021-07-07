@@ -442,9 +442,9 @@ body {
 
 .aboutcontent {
 	display: flex;
-	align-items: center;
 	justify-content: center;
-	margin: 0 180px 90px 180px;
+	flex-wrap: wrap;
+	margin: 0 180px 45px 180px;
 	padding: 0px 34px;
 }
 
@@ -474,7 +474,7 @@ body {
 }
 
 .aboutimg {
-	width: 80%;
+	max-width: 50%;
 	height: 480px;
 	padding: 17px;
 }
@@ -488,7 +488,7 @@ body {
 }
 
 .abouttext {
-	width: 90%;
+	max-width: 50%;
 	padding: 17px;
 	vertical-align: text-top;
 }
