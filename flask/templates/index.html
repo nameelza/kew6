@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+{% extends "layout.html" %}
 
-<html lang="en">
-    <head>
-        <title>hello</title>
-    </head>
-    <body>
-        hi, {{name}}
-    </body>
-</html>
+{% block body %}
+ 
+    <form action="/greet" method="POST">
+        <input autocomplete="off name="name" placeholder="Your name" type="text" autofocus>
+        <input type="submit">
+    </form>
+
+{% endblock %}
