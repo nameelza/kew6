@@ -1,6 +1,6 @@
 import os
 
-import cs50
+from cs50 import SQL 
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 
 # Configure application
@@ -21,9 +21,11 @@ def index():
         name = request.form.get("name")
         month = request.form.get("month")
         day = request.form.get("day")
+        if not name or not month or not day:
+            return redirect("/")
 
         # insert data into database
-        db.execute("INSERT INTO bdays (name, month, day) VALUES(?, ?, ?)", name, month, day)
+        db.execute("INSERT INTO birthdays (name, month, day) VALUES(?, ?, ?)", name, month, day)
 
         # go back to homepage
         return redirect("/")
@@ -31,7 +33,7 @@ def index():
     else:
 
         # TODO: Display the entries in the database on index.html
-        bdays = db.execute("SELECT * FROM bdays")
-        return render_template("index.html", bdays=bdays)
+        birthdays = db.execute("SELECT * FROM birthdays")
+        return render_template("index.html", bdays=birthdays)
 
 
