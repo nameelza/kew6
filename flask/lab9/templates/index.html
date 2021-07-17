@@ -15,10 +15,10 @@
 
                 <h2>Add a Birthday</h2>
                 <!-- TODO: Create a form for users to submit a name, a month, and a day -->
-                <form method="post">
+                <form action="/" method="post">
                     <input autocomplete="off" name="name" placeholder="Name" type="text">
-                    <input autocomplete="off" name="month" placeholder="Month" type="text">
-                    <input autocomplete="off" name="day" placeholder="Day" type="text">
+                    <input autocomplete="off" name="month" placeholder="Month" type="number" min="1" max="12">
+                    <input autocomplete="off" name="day" placeholder="Day" type="number" min="1" max="31">
                     <input type="submit" value="Add Birthday">
                 </form>
             </div>
@@ -37,8 +37,8 @@
                         <!-- TODO: Loop through the database entries to display them in this table -->
                         {% for bday in bdays %}
                             <tr>
-                                <td>{{name}}</td>
-                                <td>{{month}}/{{day}}</td>
+                                <td>{{bday.name}}</td>
+                                <td>{{bday.month}}/{{bday.day}}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
