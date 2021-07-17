@@ -1,6 +1,6 @@
 import os
 
-from cs50 import SQL
+import cs50
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 
 # Configure application
@@ -17,13 +17,14 @@ def index():
     if request.method == "POST":
 
         # TODO: Add the user's entry into the database
+        
 
         return redirect("/")
 
     else:
 
         # TODO: Display the entries in the database on index.html
-
-        return render_template("index.html")
+        bdays = db.execute("SELECT * FROM bdays")
+        return render_template("index.html", bdays=bdays)
 
 
