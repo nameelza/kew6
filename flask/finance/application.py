@@ -124,26 +124,25 @@ def register():
 
     if request.method == "POST":
 
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
+
+
         # Ensure passwords match
-        if request.form.get("password") != request.form.get("confirmation"):
+        if password != confirmation:
             return apology("passwords didn't match", 403)
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        rows = db.execute("SELECT * FROM users WHERE username = ?", username)
 
         # Ensure username doesn't already exist
         if len(rows) != 0:
             return apology("username already exists", 403)
         else:
-            # Access data from form
-            username = request.form.get("username")
-            hash = request.form.get.generate_password_hash("password")
+            hash = generate_password_hash(password)
             # Insert data into database
-            db.execute("INSERT INTO finance (users.name, users.hash) VALUES(?, ?)", username, hash)
-        
-
-        # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+            db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", username, hash)
 
         # Redirect user to home page
         return redirect("/")
