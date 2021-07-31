@@ -46,14 +46,28 @@ if not os.environ.get("API_KEY"):
 @login_required
 def index():
     """Show portfolio of stocks"""
-    return apology("TODO")
+
+    return render_template("index.html")
 
 
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
 def buy():
     """Buy shares of stock"""
-    return apology("TODO")
+    if request.method == "POST":
+
+        symbol = request.form.get("symbol")
+        shares = request.form.get("shares")
+
+        data = lookup(symbol)
+
+        if not data:
+            return apology("stock not found")
+        else:
+            return render_template("index.html", data=data, shares=shares)
+
+    else:
+        return render_template("buy.html")
 
 
 @app.route("/history")
