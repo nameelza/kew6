@@ -16,17 +16,31 @@
         </tr>
     </thead>
     <tbody>
+         {% for stock in data %}
+            <tr>
+                <td>{{stock.name}}</td>
+                <td>{{stock.full_name}}</td>
+                <td>{{stock.amount}}</td>
+                <td>${{stock.price}}</td>
+                <td>${{stock.price*stock.amount}}</td>
+            </tr>
+        {% endfor %}
         <tr>
-            <td>l</td>
-            <td>h</td>
+            <td>CASH</td>
             <td></td>
-            <td>h</td>
+            <td></td>
+            <td></td>
+            <td>${{cash}}</td>
         </tr>
         <tr>
-            <td>l</td>
-            <td>h</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>${{cash}}</td>
         </tr>
     </tbody>
 </table>
+
 
 {% endblock %}
