@@ -46,8 +46,17 @@ if not os.environ.get("API_KEY"):
 @login_required
 def index():
     """Show portfolio of stocks"""
+    cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
 
-    return render_template("index.html")
+    data = db.execute("SELECT * FROM shares WHERE user_id = ?", session["user_id"])
+    
+    if len(data) != 0:
+        for stock in data:
+            stock["name"] = lookup(stock["stock"])["symbol"]
+            stock["full_name"] = lookup(stock["stock"])["name"]
+            stock["price"] = lookup(stock["stock"])["price"]
+        print(data)
+    return render_template("index.html", cash=cash[0]['cash'], data=data)
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -60,11 +69,18 @@ def buy():
         shares = request.form.get("shares")
 
         data = lookup(symbol)
+        print(data)
 
-        if not data:
-            return apology("stock not found")
+        if data:
+            amount = data["price"] * float(shares)
+            cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
+            if cash[0]["cash"] < amount:
+                return apology("not enough cash")
+            db.execute("INSERT INTO shares (stock, amount, user_id) VALUES(?, ?, ?)", symbol, shares, session["user_id"])
+            db.execute("UPDATE users SET cash=(?)", (cash[0]["cash"] - amount))
+            return redirect("/")
         else:
-            return render_template("index.html", data=data, shares=shares)
+            return apology("stock not found")
 
     else:
         return render_template("buy.html")
