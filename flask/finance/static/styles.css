@@ -45,3 +45,30 @@ main img
     /* Constrain images on small screens */
     max-width: 100%;
 }
+
+/* Portfolio table */
+#portfolio {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#portfolio td, #portfolio th {
+  border: 1px solid #ddd;
+  border-left: none;
+  border-right: none;
+  padding: 8px;
+  text-align: left;
+}
+
+#portfolio tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#portfolio tr:last-child td {
+    border-bottom: none;
+    font-weight: bold;
+}
+
+#portfolio tr:hover {
+    background-color: #ddd;
+}
