@@ -49,13 +49,13 @@ def index():
     cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
 
     data = db.execute("SELECT * FROM shares WHERE user_id = ?", session["user_id"])
-    
-    if len(data) != 0:
-        for stock in data:
-            stock["name"] = lookup(stock["stock"])["symbol"]
-            stock["full_name"] = lookup(stock["stock"])["name"]
-            stock["price"] = lookup(stock["stock"])["price"]
-        print(data)
+
+    # if len(data) != 0:
+    #     # for stock in data:
+    #     #     stock["name"] = lookup(stock["stock"])["symbol"]
+    #     #     stock["full_name"] = lookup(stock["stock"])["name"]
+    #     #     stock["price"] = lookup(stock["stock"])["price"]
+    #     print(data)
     return render_template("index.html", cash=cash[0]['cash'], data=data)
 
 
@@ -65,18 +65,21 @@ def buy():
     """Buy shares of stock"""
     if request.method == "POST":
 
-        symbol = request.form.get("symbol")
+        input = request.form.get("symbol")
         shares = request.form.get("shares")
 
-        data = lookup(symbol)
-        print(data)
+        data = lookup(input)
+        symbol = data["symbol"]
+        name = data["name"]
+        price = data["price"]
 
         if data:
-            amount = data["price"] * float(shares)
+            amount = price * float(shares)
             cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
             if cash[0]["cash"] < amount:
                 return apology("not enough cash")
-            db.execute("INSERT INTO shares (stock, amount, user_id) VALUES(?, ?, ?)", symbol, shares, session["user_id"])
+
+            db.execute("INSERT INTO shares (symbol, name, amount, price, user_id) VALUES(?, ?, ?, ?, ?)", symbol, name, shares, price, session["user_id"])
             db.execute("UPDATE users SET cash=(?)", (cash[0]["cash"] - amount))
             return redirect("/")
         else:
