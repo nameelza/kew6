@@ -51,10 +51,10 @@ def index():
     data = db.execute("SELECT * FROM shares WHERE user_id = ?", session["user_id"])
 
     # if len(data) != 0:
-    #     # for stock in data:
-    #     #     stock["name"] = lookup(stock["stock"])["symbol"]
-    #     #     stock["full_name"] = lookup(stock["stock"])["name"]
-    #     #     stock["price"] = lookup(stock["stock"])["price"]
+        # for stock in data:
+        #     stock["name"] = lookup(stock["stock"])["symbol"]
+        #     stock["full_name"] = lookup(stock["stock"])["name"]
+        #     stock["price"] = lookup(stock["stock"])["price"]
     #     print(data)
     return render_template("index.html", cash=cash[0]['cash'], data=data)
 
@@ -73,13 +73,17 @@ def buy():
         name = data["name"]
         price = data["price"]
 
+        # Check if stock exists
         if data:
             amount = price * float(shares)
             cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
+            # Check if user has enough cash to buy stocks
             if cash[0]["cash"] < amount:
                 return apology("not enough cash")
 
+            # Update shares table with bought stocks
             db.execute("INSERT INTO shares (symbol, name, amount, price, user_id) VALUES(?, ?, ?, ?, ?)", symbol, name, shares, price, session["user_id"])
+            # Update cash amount
             db.execute("UPDATE users SET cash=(?)", (cash[0]["cash"] - amount))
             return redirect("/")
         else:
