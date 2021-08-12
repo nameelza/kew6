@@ -18,8 +18,8 @@
     <tbody>
          {% for stock in data %}
             <tr>
+                <td>{{stock.symbol}}</td>
                 <td>{{stock.name}}</td>
-                <td>{{stock.full_name}}</td>
                 <td>{{stock.amount}}</td>
                 <td>${{stock.price}}</td>
                 <td>${{stock.price*stock.amount}}</td>
