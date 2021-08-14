@@ -49,7 +49,6 @@ def index():
     cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
 
     total = db.execute("SELECT total FROM users WHERE id = ?", session["user_id"])
-    print(total)
 
     data = db.execute("SELECT * FROM shares WHERE user_id = ?", session["user_id"])
 
