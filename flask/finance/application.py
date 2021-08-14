@@ -48,6 +48,9 @@ def index():
     """Show portfolio of stocks"""
     cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
 
+    total = db.execute("SELECT total FROM users WHERE id = ?", session["user_id"])
+    print(total)
+
     data = db.execute("SELECT * FROM shares WHERE user_id = ?", session["user_id"])
 
     # if len(data) != 0:
@@ -56,7 +59,7 @@ def index():
         #     stock["full_name"] = lookup(stock["stock"])["name"]
         #     stock["price"] = lookup(stock["stock"])["price"]
     #     print(data)
-    return render_template("index.html", cash=cash[0]['cash'], data=data)
+    return render_template("index.html", cash=cash[0]['cash'], total=total[0]['total'], data=data)
 
 
 @app.route("/buy", methods=["GET", "POST"])
