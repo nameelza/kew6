@@ -22,7 +22,7 @@
                 <td>{{stock.name}}</td>
                 <td>{{stock.amount}}</td>
                 <td>${{stock.price}}</td>
-                <td>${{stock.price*stock.amount}}</td>
+                <td>${{stock.total}}</td>
             </tr>
         {% endfor %}
         <tr>
@@ -41,6 +41,4 @@
         </tr>
     </tbody>
 </table>
-
-
 {% endblock %}
