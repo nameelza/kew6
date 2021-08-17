@@ -52,13 +52,7 @@ def index():
 
     data = db.execute("SELECT * FROM shares WHERE user_id = ?", session["user_id"])
 
-    # if len(data) != 0:
-        # for stock in data:
-        #     stock["name"] = lookup(stock["stock"])["symbol"]
-        #     stock["full_name"] = lookup(stock["stock"])["name"]
-        #     stock["price"] = lookup(stock["stock"])["price"]
-    #     print(data)
-    return render_template("index.html", cash=cash[0]['cash'], total=total[0]['total'], data=data)
+    return render_template("index.html", cash=format(cash[0]['cash'], ".2f"), total=format(total[0]['total'], ".2f"), data=data)
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -74,19 +68,35 @@ def buy():
         symbol = data["symbol"]
         name = data["name"]
         price = data["price"]
+        total = float(shares) * price
 
         # Check if stock exists
         if data:
-            amount = price * float(shares)
-            cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
+            cash = db.execute("SELECT cash FROM users WHERE id = (?)", session["user_id"])
             # Check if user has enough cash to buy stocks
-            if cash[0]["cash"] < amount:
+            if cash[0]["cash"] < total:
                 return apology("not enough cash")
 
-            # Update shares table with bought stocks
-            db.execute("INSERT INTO shares (symbol, name, amount, price, user_id) VALUES(?, ?, ?, ?, ?)", symbol, name, shares, price, session["user_id"])
-            # Update cash amount
-            db.execute("UPDATE users SET cash=(?)", (cash[0]["cash"] - amount))
+            if db.execute("SELECT * FROM shares WHERE symbol = (?) AND user_id = (?)", symbol, session["user_id"]):
+                # Set new amount of shares
+                current_amount = db.execute("SELECT amount FROM shares WHERE symbol = (?) AND user_id = (?)", symbol, session["user_id"])
+                new_amount = current_amount[0]["amount"] + int(shares)
+                # # Set new total amount
+                # current_total = db.execute("SELECT total FROM shares WHERE symbol = (?) AND user_id = (?)", symbol, session["user_id"])
+                # new_total = format(current_total[0]["total"] + total, ".2f")
+
+                # Update shares amount, price and total
+                db.execute("UPDATE shares SET amount = (?), price = (?) WHERE user_id = (?) AND symbol = (?)", new_amount, price, session["user_id"], symbol)
+                # Update cash amount
+                db.execute("UPDATE users SET cash=(?) WHERE id = (?)", (cash[0]["cash"] - total), session["user_id"])
+
+            else:
+                # Add new shares to shares table
+                db.execute("INSERT INTO shares (symbol, name, amount, price, user_id) VALUES(?, ?, ?, ?, ?)", symbol, name, shares, price, session["user_id"])
+
+                # Update cash amount
+                db.execute("UPDATE users SET cash=(?) WHERE id = (?)", (cash[0]["cash"] - total), session["user_id"])
+
             return redirect("/")
         else:
             return apology("stock not found")
@@ -207,10 +217,46 @@ def sell():
     """Sell shares of stock"""
     if request.method == "POST":
 
-        pass
+        symbol = request.form.get("symbol")
+        shares = request.form.get("shares")
+
+        data = lookup(symbol)
+        price = data["price"]
+        total = price * float(shares)
+
+        # Check if user has enough shares of the stock
+        current_shares = db.execute("SELECT amount FROM shares WHERE symbol= ? AND user_id= ?", symbol, session["user_id"])
+        if not current_shares or int(shares) > current_shares[0]["amount"]:
+            return apology("not enough shares", 403)
+        else:
+            # Set new amount of shares
+            current_amount = db.execute("SELECT amount FROM shares WHERE symbol = (?) AND user_id = (?)", symbol, session["user_id"])
+            new_amount = current_amount[0]["amount"] - int(shares)
+            # # Set new total amount
+            # current_total = db.execute("SELECT total FROM shares WHERE symbol = (?) AND user_id = (?)", symbol, session["user_id"])
+            # new_total = format(current_total[0]["total"] - total, ".2f")
+
+            # Update amount of shares
+            db.execute("UPDATE shares SET amount = (?) WHERE user_id = (?) AND symbol = (?)", new_amount, session["user_id"], symbol)
+
+            # Update cash
+            cash = db.execute("SELECT cash FROM users WHERE id = (?)", session["user_id"])
+            db.execute("UPDATE users SET cash=(?) WHERE id = (?)", (cash[0]["cash"] + total), session["user_id"])
+
+            # Update total of cash
+            current_price = db.execute("SELECT price FROM shares WHERE user_id = (?) AND symbol = (?)", session["user_id"], symbol)
+            difference = total - (float(current_price[0]["price"])*float(shares))
+            current_total = db.execute("SELECT total FROM users WHERE id = (?)", session["user_id"])
+            new_total = current_total[0]["total"] + difference
+            db.execute("UPDATE users SET total=(?) WHERE id = (?)", new_total, session["user_id"])
+
+        # Redirect user to home page
+        return redirect("/")
 
     else:
-        return render_template("sell.html")
+        symbols = db.execute("SELECT symbol FROM shares WHERE user_id = ?", session["user_id"])
+
+        return render_template("sell.html", symbols = symbols)
 
 
 def errorhandler(e):
