@@ -52,7 +52,7 @@ def index():
 
     data = db.execute("SELECT * FROM shares WHERE user_id = ?", session["user_id"])
 
-    return render_template("index.html", cash=format(cash[0]['cash'], ".2f"), total=format(total[0]['total'], ".2f"), data=data)
+    return render_template("index.html", cash=cash[0]['cash'], total=total[0]['total'], data=data)
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -109,7 +109,10 @@ def buy():
 @login_required
 def history():
     """Show history of transactions"""
-    return apology("TODO")
+    if request.method == "POST":
+        pass
+    else:
+        return render_template("history.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
