@@ -6,4 +6,25 @@
 
 {% block main %}
 
+<table id = "history">
+    <thead>
+        <tr>
+            <th>Symbol</th>
+            <th>Shares</th>
+            <th>Price</th>
+            <th>Transacted</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for trans in data%}
+        <tr>
+            <td>{{trans.symbol}}</td>
+            <td>{{trans.shares}}</td>
+            <td>{{trans.price | usd}}</td>
+            <td>{{trans.time}} UTC</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}
