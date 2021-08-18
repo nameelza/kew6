@@ -95,3 +95,26 @@ main img
 #history tr:hover {
     background-color: #ddd;
 }
+
+/* Account */
+
+#form {
+    text-align: left;
+    margin-left: 10%;
+}
+
+.username {
+    margin-bottom: 50px;
+}
+
+#blocks :not(:last-child) {
+    margin-right: 60px;
+}
+
+#blocks {
+    display:flex;
+}
+
+h5 {
+    margin-bottom: 15px;
+}
