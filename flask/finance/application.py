@@ -1,7 +1,7 @@
 import os
 
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
@@ -109,7 +109,20 @@ def buy():
             dt_string = curr_time.strftime("%Y-%m-%d %H:%M:%S")
             db.execute("INSERT INTO history (symbol, shares, price, time, user_id) VALUES(?, ?, ?, ?, ?)", symbol, shares, price, dt_string, session["user_id"])
 
-            return redirect("/")
+
+            cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
+
+            # Count total (cash + total shares amount)
+            shares_totals = db.execute("SELECT total FROM shares WHERE user_id = ?", session["user_id"])
+            shares_totals_sum = 0
+            for key in shares_totals:
+                shares_totals_sum += key["total"]
+            total_cash = cash[0]['cash'] + shares_totals_sum
+
+
+            data = db.execute("SELECT * FROM shares WHERE user_id = ?", session["user_id"])
+
+            return render_template("index.html", cash=cash[0]['cash'], total=total_cash, data=data, is_bought=True)
 
         else:
             return apology("stock not found")
@@ -225,6 +238,50 @@ def register():
     else:
         return render_template("register.html")
 
+@app.route("/account")
+@login_required
+def account():
+    """View account page"""
+
+    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+    cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
+    return render_template("account.html", username = username[0]["username"], cash = cash[0]["cash"])
+
+
+@app.route("/reset_password", methods=["POST"])
+def reset_password():
+    """Change password"""
+
+    curr_password = request.form.get("old password")
+    new_password = request.form.get("new password")
+
+    # Query database for hash
+    hash = db.execute("SELECT hash FROM users WHERE id = ?", session["user_id"])
+
+    # Check if old password is right
+    if not check_password_hash(hash[0]["hash"], curr_password):
+        return apology("your current password is not valid", 403)
+    # Change password
+    else:
+        new_hash = generate_password_hash(new_password)
+        db.execute("UPDATE users SET hash = ? WHERE id = ?", new_hash, session["user_id"])
+
+    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+    cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
+    return render_template("account.html", username = username[0]["username"], cash = cash[0]["cash"], password_is_changed=True)
+
+@app.route("/add_cash", methods=["POST"])
+def add_cash():
+    """Add cash"""
+
+    cash_add = request.form.get("added cash")
+
+    current_cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
+    new_cash = current_cash[0]["cash"] + float(cash_add)
+    db.execute("UPDATE users SET cash = ?", new_cash)
+
+    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+    return render_template("account.html", username = username[0]["username"], cash=new_cash, cash_is_added=True)
 
 
 @app.route("/sell", methods=["GET", "POST"])
@@ -269,8 +326,20 @@ def sell():
                 db.execute("DELETE FROM shares WHERE user_id = ? AND symbol = ?", session["user_id"], symbol)
 
 
-        # Redirect user to home page
-        return redirect("/")
+            # Redirect user to home page
+            cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
+
+            # Count total (cash + total shares amount)
+            shares_totals = db.execute("SELECT total FROM shares WHERE user_id = ?", session["user_id"])
+            shares_totals_sum = 0
+            for key in shares_totals:
+                shares_totals_sum += key["total"]
+            total_cash = cash[0]['cash'] + shares_totals_sum
+
+
+            data = db.execute("SELECT * FROM shares WHERE user_id = ?", session["user_id"])
+
+            return render_template("index.html", cash=cash[0]['cash'], total=total_cash, data=data, is_sold=True)
 
     else:
         symbols = db.execute("SELECT symbol FROM shares WHERE user_id = ?", session["user_id"])
