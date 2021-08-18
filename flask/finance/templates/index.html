@@ -5,6 +5,16 @@
 {% endblock %}
 
 {% block main %}
+    {% if is_bought %}
+        <div class="alert alert-success" role="alert">
+          Bought!
+        </div>
+    {% endif %}
+    {% if is_sold %}
+        <div class="alert alert-success" role="alert">
+          Sold!
+        </div>
+    {% endif %}
 <table id="portfolio">
     <thead>
         <tr>
@@ -21,8 +31,8 @@
                 <td>{{stock.symbol}}</td>
                 <td>{{stock.name}}</td>
                 <td>{{stock.amount}}</td>
-                <td>${{stock.price}}</td>
-                <td>{{(stock.amount*stock.price) | usd }}</td>
+                <td>{{stock.price | usd}}</td>
+                <td>{{(stock.total) | usd }}</td>
             </tr>
         {% endfor %}
         <tr>
@@ -41,6 +51,4 @@
         </tr>
     </tbody>
 </table>
-
-
 {% endblock %}
