@@ -6,6 +6,7 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
+from datetime import datetime
 
 from helpers import apology, login_required, lookup, usd
 
@@ -97,6 +98,12 @@ def buy():
                 # Update cash amount
                 db.execute("UPDATE users SET cash=(?) WHERE id = (?)", (cash[0]["cash"] - total), session["user_id"])
 
+            # Insert data into history table
+            curr_time = datetime.now()
+            dt_string = curr_time.strftime("%Y-%m-%d %H:%M:%S")
+            db.execute("INSERT INTO history (symbol, shares, price, time, user_id) VALUES(?, ?, ?, ?, ?)", symbol, shares, price, dt_string, session["user_id"])
+
+
             return redirect("/")
         else:
             return apology("stock not found")
@@ -109,10 +116,10 @@ def buy():
 @login_required
 def history():
     """Show history of transactions"""
-    if request.method == "POST":
-        pass
-    else:
-        return render_template("history.html")
+
+    data = db.execute("SELECT * FROM history WHERE user_id = ?", session["user_id"])
+
+    return render_template("history.html", data = data)
 
 
 @app.route("/login", methods=["GET", "POST"])
