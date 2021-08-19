@@ -57,7 +57,6 @@ def index():
         shares_totals_sum += key["total"]
     total_cash = cash[0]['cash'] + shares_totals_sum
 
-
     data = db.execute("SELECT * FROM shares WHERE user_id = ?", session["user_id"])
 
     return render_template("index.html", cash=cash[0]['cash'], total=total_cash, data=data)
@@ -72,7 +71,20 @@ def buy():
         input = request.form.get("symbol")
         shares = request.form.get("shares")
 
+        # Check if number of shares have letters or symbols
+        if not shares.isnumeric():
+            return apology("not valid number of shares", 400)
+
+        # Check if number of shares is negative or decimal
+        if float(shares) < 1 or float(shares) % 1 != 0:
+            return apology("not valid number of shares", 400)
+
         data = lookup(input)
+
+        # Check if stock exists
+        if not data:
+            return apology("not valid stock", 400)
+
         symbol = data["symbol"]
         name = data["name"]
         price = data["price"]
@@ -83,23 +95,26 @@ def buy():
             cash = db.execute("SELECT cash FROM users WHERE id = (?)", session["user_id"])
             # Check if user has enough cash to buy stocks
             if cash[0]["cash"] < total:
-                return apology("not enough cash")
+                return apology("not enough cash", 400)
 
             if db.execute("SELECT * FROM shares WHERE symbol = (?) AND user_id = (?)", symbol, session["user_id"]):
                 # Set new amount of shares
-                current_amount = db.execute("SELECT amount FROM shares WHERE symbol = (?) AND user_id = (?)", symbol, session["user_id"])
+                current_amount = db.execute(
+                    "SELECT amount FROM shares WHERE symbol = (?) AND user_id = (?)", symbol, session["user_id"])
                 new_amount = current_amount[0]["amount"] + int(shares)
                 # Set new total amount
                 new_total = new_amount*price
 
                 # Update shares amount, price and total
-                db.execute("UPDATE shares SET amount = ?, price = ?, total = ? WHERE user_id = ? AND symbol = ?", new_amount, price, new_total, session["user_id"], symbol)
+                db.execute("UPDATE shares SET amount = ?, price = ?, total = ? WHERE user_id = ? AND symbol = ?",
+                           new_amount, price, new_total, session["user_id"], symbol)
                 # Update cash amount
                 db.execute("UPDATE users SET cash=(?) WHERE id = (?)", (cash[0]["cash"] - total), session["user_id"])
 
             else:
                 # Add new shares to shares table
-                db.execute("INSERT INTO shares (symbol, name, amount, price, total, user_id) VALUES(?, ?, ?, ?, ?, ?)", symbol, name, shares, price, total, session["user_id"])
+                db.execute("INSERT INTO shares (symbol, name, amount, price, total, user_id) VALUES(?, ?, ?, ?, ?, ?)",
+                           symbol, name, shares, price, total, session["user_id"])
 
                 # Update cash amount
                 db.execute("UPDATE users SET cash=(?) WHERE id = (?)", (cash[0]["cash"] - total), session["user_id"])
@@ -107,8 +122,8 @@ def buy():
             # Insert data into history table
             curr_time = datetime.now()
             dt_string = curr_time.strftime("%Y-%m-%d %H:%M:%S")
-            db.execute("INSERT INTO history (symbol, shares, price, time, user_id) VALUES(?, ?, ?, ?, ?)", symbol, shares, price, dt_string, session["user_id"])
-
+            db.execute("INSERT INTO history (symbol, shares, price, time, user_id) VALUES(?, ?, ?, ?, ?)",
+                       symbol, shares, price, dt_string, session["user_id"])
 
             cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
 
@@ -119,13 +134,9 @@ def buy():
                 shares_totals_sum += key["total"]
             total_cash = cash[0]['cash'] + shares_totals_sum
 
-
             data = db.execute("SELECT * FROM shares WHERE user_id = ?", session["user_id"])
 
             return render_template("index.html", cash=cash[0]['cash'], total=total_cash, data=data, is_bought=True)
-
-        else:
-            return apology("stock not found")
 
     else:
         return render_template("buy.html")
@@ -138,7 +149,7 @@ def history():
 
     data = db.execute("SELECT * FROM history WHERE user_id = ?", session["user_id"])
 
-    return render_template("history.html", data = data)
+    return render_template("history.html", data=data)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -193,15 +204,14 @@ def logout():
 def quote():
     """Get stock quote."""
     if request.method == "POST":
-        symbol = request.form.get("symbol");
+        symbol = request.form.get("symbol")
         data = lookup(symbol)
         if not data:
             return apology("stock not found")
         else:
-            return render_template("quoted.html", data = data)
+            return render_template("quoted.html", data=data)
     else:
         return render_template("quote.html")
-
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -217,16 +227,19 @@ def register():
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
 
+        if not username or not password or not confirmation:
+            return apology("please fill all the fields", 400)
+
         # Ensure passwords match
         if password != confirmation:
-            return apology("passwords didn't match", 403)
+            return apology("passwords didn't match", 400)
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?", username)
 
         # Ensure username doesn't already exist
         if len(rows) != 0:
-            return apology("username already exists", 403)
+            return apology("username already exists", 400)
         else:
             hash = generate_password_hash(password)
             # Insert data into database
@@ -238,6 +251,7 @@ def register():
     else:
         return render_template("register.html")
 
+
 @app.route("/account")
 @login_required
 def account():
@@ -245,7 +259,7 @@ def account():
 
     username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
     cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-    return render_template("account.html", username = username[0]["username"], cash = cash[0]["cash"])
+    return render_template("account.html", username=username[0]["username"], cash=cash[0]["cash"])
 
 
 @app.route("/reset_password", methods=["POST"])
@@ -268,7 +282,8 @@ def reset_password():
 
     username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
     cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
-    return render_template("account.html", username = username[0]["username"], cash = cash[0]["cash"], password_is_changed=True)
+    return render_template("account.html", username=username[0]["username"], cash=cash[0]["cash"], password_is_changed=True)
+
 
 @app.route("/add_cash", methods=["POST"])
 def add_cash():
@@ -281,7 +296,7 @@ def add_cash():
     db.execute("UPDATE users SET cash = ?", new_cash)
 
     username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
-    return render_template("account.html", username = username[0]["username"], cash=new_cash, cash_is_added=True)
+    return render_template("account.html", username=username[0]["username"], cash=new_cash, cash_is_added=True)
 
 
 @app.route("/sell", methods=["GET", "POST"])
@@ -301,16 +316,17 @@ def sell():
         # Check if user has enough shares of the stock
         current_shares = db.execute("SELECT amount FROM shares WHERE symbol= ? AND user_id= ?", symbol, session["user_id"])
         if not current_shares or int(shares) > current_shares[0]["amount"]:
-            return apology("not enough shares", 403)
+            return apology("not enough shares", 400)
         else:
-
             # Set new amount of shares
-            current_amount = db.execute("SELECT amount FROM shares WHERE symbol = (?) AND user_id = (?)", symbol, session["user_id"])
+            current_amount = db.execute("SELECT amount FROM shares WHERE symbol = (?) AND user_id = (?)",
+                                        symbol, session["user_id"])
             new_amount = current_amount[0]["amount"] - int(shares)
             # Set new total amount*price
             total_shares = new_amount*price
             # Update amount of shares, total amount*price and new price
-            db.execute("UPDATE shares SET amount = ?, total = ?, price = ? WHERE user_id = (?) AND symbol = (?)", new_amount, total_shares, price, session["user_id"], symbol)
+            db.execute("UPDATE shares SET amount = ?, total = ?, price = ? WHERE user_id = (?) AND symbol = (?)",
+                       new_amount, total_shares, price, session["user_id"], symbol)
 
             # Update cash
             cash = db.execute("SELECT cash FROM users WHERE id = (?)", session["user_id"])
@@ -320,11 +336,11 @@ def sell():
             curr_time = datetime.now()
             dt_string = curr_time.strftime("%Y-%m-%d %H:%M:%S")
             sold_shares = 0 - int(shares)
-            db.execute("INSERT INTO history (symbol, shares, price, time, user_id) VALUES(?, ?, ?, ?, ?)", symbol, sold_shares, price, dt_string, session["user_id"])
+            db.execute("INSERT INTO history (symbol, shares, price, time, user_id) VALUES(?, ?, ?, ?, ?)",
+                       symbol, sold_shares, price, dt_string, session["user_id"])
 
             if current_shares[0]["amount"] == int(shares):
                 db.execute("DELETE FROM shares WHERE user_id = ? AND symbol = ?", session["user_id"], symbol)
-
 
             # Redirect user to home page
             cash = db.execute("SELECT cash FROM users WHERE id = ?", session["user_id"])
@@ -336,15 +352,13 @@ def sell():
                 shares_totals_sum += key["total"]
             total_cash = cash[0]['cash'] + shares_totals_sum
 
-
             data = db.execute("SELECT * FROM shares WHERE user_id = ?", session["user_id"])
 
             return render_template("index.html", cash=cash[0]['cash'], total=total_cash, data=data, is_sold=True)
 
     else:
         symbols = db.execute("SELECT symbol FROM shares WHERE user_id = ?", session["user_id"])
-
-        return render_template("sell.html", symbols = symbols)
+        return render_template("sell.html", symbols=symbols)
 
 
 def errorhandler(e):
