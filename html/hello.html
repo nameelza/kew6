@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        
+        <script>
+            function greet() 
+            {
+                let name = document.querySelector("#name").value;
+                alert("Hello, " + name + "!");
+            }
+        </script>
+        <title>Hello</title>
+    </head>
+    <body>
+        <form onsubmit="greet(); return false;">
+            <input autocomplete="off" type="text" id="name" placeholder="Name">
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>
