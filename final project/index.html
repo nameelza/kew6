@@ -1,17 +1,29 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="styles.css" rel="stylesheet">
-        <title>Hello</title>
+        <title>Octopus</title>
     </head>
+
     <body>
         <div class="containerTimer">
-            <div class="timer">
-                <h1>Timer</h1>
+            <div class="currentTask">
+                <input type="text" placeholder="Add your task">
+            </div>
+            <div class="Timer">
+            <span id="minutes">25</span>:<span id="seconds">00</span>
             </div>
             <div class="timerButtons">
-                <button>Start</button>
+                <button id="start">Start</button>
+                <button id="break">Take a break</button>
+                <button id="continue">Continue</button>
+                <button id="finish">Finish session</button>   
             </div>
         </div>
+        <script src="script.js"></script>
     </body>
 </html>
