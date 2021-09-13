@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Octopus
+{% endblock %}
+
+{% block body %}
+    <div class="containerTimer">
+      <input type="text" placeholder="What do you want to focus on?" />
+      <div class="Timer">
+        <span id="minutes">25</span>:<span id="seconds">00</span>
+      </div>
+      <div class="timerButtons">
+        <button id="start">Start</button>
+        <button id="break">Take a break</button>
+        <button id="continue">Continue</button>
+        <button id="finish">Finish session</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+{% endblock %}
