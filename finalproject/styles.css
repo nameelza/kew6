@@ -1,0 +1,29 @@
+body{
+    margin: 34px;
+}
+
+.containerTimer {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+input[type=text] {
+    border: none;
+    color: #373500;
+    font-size: 36px;
+    height: 43px;
+    text-align: center;
+    width: 515px;
+    font-family: 'Lato', sans-serif;;
+}
+
+input[type=text]::placeholder{
+    color: #B3B3B3;
+    font-size: 36px;
+}
+
+input:focus {
+    outline: none;
+}
+
