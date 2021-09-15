@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="styles.css" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <title>{% block title %}{% endblock %}</title>
-  </head>
 
-  <body>
+    <head>
 
-    <link rel="icon" type="image/png" href="/finalproject/assets/octopus.png" />
-    {% block main %}{% endblock %}
-  </body>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link href="styles.css" rel="stylesheet" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap"
+        rel="stylesheet"
+      />
+
+      <title>{% block title %}{% endblock %}</title>
+    </head>
+
+    <body>
+
+      <a href="/"><link rel="icon" type="image/png" href="/finalproject/assets/octopus.png" /></a>
+
+      {% if session.user_id %}
+        <a href="/finalproject/templates/account"><link rel="icon" type="image/png" href="/finalproject/assets/account.png" /></a>
+      {% else %}
+        <a href="/finalproject/templates/register"><link rel="icon" type="image/png" href="/finalproject/assets/account.png" /></a>
+      {% endif %}
+
+      {% block main %}{% endblock %}
+
+    </body>
 </html>
