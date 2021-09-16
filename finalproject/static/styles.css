@@ -1,0 +1,69 @@
+body{
+    margin: 34px;
+}
+
+/* layout.html */
+
+.header {
+    align-items: center;
+    display: flex;
+    justify-content:space-between;
+    margin-bottom: 20px;
+}
+
+.todoIcon {
+    width: 50px;
+    height: 12px;
+}
+
+.todoIcon img {
+    width: auto;
+    height: 100%;
+}
+
+.accountIcon {
+    width: 50px;
+    height: 50px;
+}
+
+.accountIcon img {
+    width: auto;
+    height: 100%;
+}
+
+
+.logo h1{
+    color: #F6BF4E;
+    font-family: 'Spectral', serif;
+    font-size: 24px;
+    font-weight: extra-bold;
+    float: center;
+}
+
+/* index.html */
+
+.containerTimer {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+input[type=text] {
+    border: none;
+    color: #373500;
+    font-size: 36px;
+    height: 43px;
+    text-align: center;
+    width: 515px;
+    font-family: 'Lato', sans-serif;;
+}
+
+input[type=text]::placeholder{
+    color: #B3B3B3;
+    font-size: 36px;
+}
+
+input:focus {
+    outline: none;
+}
+

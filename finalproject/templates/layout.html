@@ -6,28 +6,49 @@
 
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link href="styles.css" rel="stylesheet" />
+
+      <link href="/static/styles.css" rel="stylesheet" />
+
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link
         href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap"
-        rel="stylesheet"
-      />
+        rel="stylesheet"/>
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link 
+        href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700;800&display=swap" 
+        rel="stylesheet">
 
       <title>{% block title %}{% endblock %}</title>
     </head>
 
     <body>
+      
+      <div class="header">
+          
+        <div class="todoIcon">
+          <img src="/static/todoicon.png" >
+        </div>
 
-      <a href="/"><link rel="icon" type="image/png" href="/finalproject/assets/octopus.png" /></a>
-
-      {% if session.user_id %}
-        <a href="/finalproject/templates/account"><link rel="icon" type="image/png" href="/finalproject/assets/account.png" /></a>
-      {% else %}
-        <a href="/finalproject/templates/register"><link rel="icon" type="image/png" href="/finalproject/assets/account.png" /></a>
-      {% endif %}
-
-      {% block main %}{% endblock %}
+        <div class="logo">
+          <h1>octopus</h1>
+        </div>
+        
+        <div class="accountIcon">
+          {% if session.user_id %}
+            <img rel="icon" src="/static/account.png" />
+          {% else %}
+            <img rel="icon" src="/static/account.png" />
+          {% endif %}
+        </div>
+        
+      </div>
+      
+      
+      {% block body %}{% endblock %}
+      
 
     </body>
 </html>
