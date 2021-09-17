@@ -33,14 +33,14 @@
         </div>
 
         <div class="logo">
-          <h1>octopus</h1>
+          <a href="/"><h1>octopus</h1></a>
         </div>
         
         <div class="accountIcon">
           {% if session.user_id %}
-            <img rel="icon" src="/static/account.png" />
+            <a href="/account"><img rel="icon" src="/static/account.png" /></a>
           {% else %}
-            <img rel="icon" src="/static/account.png" />
+            <a href="/register"><img rel="icon" src="/static/account.png" /></a>
           {% endif %}
         </div>
         
