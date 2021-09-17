@@ -29,7 +29,7 @@
       <div class="header">
           
         <div class="todoIcon">
-          <img src="/static/todoicon.png" >
+          <img src="/static/todoicon.png" alt="To-do lists" >
         </div>
 
         <div class="logo">
@@ -38,9 +38,9 @@
         
         <div class="accountIcon">
           {% if session.user_id %}
-            <a href="/account"><img rel="icon" src="/static/account.png" /></a>
+            <a href="/account"><img rel="icon" src="/static/account.png" alt="Account" /></a>
           {% else %}
-            <a href="/register"><img rel="icon" src="/static/account.png" /></a>
+            <a href="/register"><img rel="icon" src="/static/account.png" alt="Account" /></a>
           {% endif %}
         </div>
         
