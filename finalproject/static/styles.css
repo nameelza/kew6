@@ -56,7 +56,7 @@ a:link {
     margin-top: 60px;
 }
 
-input[type=text] {
+.containerTimer input[type=text] {
     border: none;
     color: #373500;
     font-size: 36px;
@@ -67,17 +67,17 @@ input[type=text] {
     letter-spacing: .7px;
 }
 
-input[type=text]::placeholder{
+.containerTimer input[type=text]::placeholder{
     color: #ccc9c9;
     font-size: 36px;
     letter-spacing: .7px;
 }
 
-input:focus {
+.containerTimer input:focus {
     outline: none;
 }
 
-input:focus::placeholder {
+.containerTimer input:focus::placeholder {
     color: transparent;
   }
 
