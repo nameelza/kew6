@@ -1,13 +1,9 @@
-/* Open when someone clicks on the element */
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    let btnopen = document.getElementById("btnopen");
-    btnopen.addEventListener("click", function() {
-        document.getElementById("myNav").style.width = "100%";
-    }); 
-});
-
+/* Open when someone clicks on the span element */
+function openNav() {
+    document.getElementById("myNav").style.width = "100%";
+  }
   
-  /* Close when someone clicks on the arrows inside the overlay */
+  /* Close when someone clicks on the "x" symbol inside the overlay */
+  function closeNav() {
+    document.getElementById("myNav").style.width = "0%";
+  }
