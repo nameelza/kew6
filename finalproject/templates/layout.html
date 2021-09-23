@@ -21,7 +21,6 @@
         href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700;800&display=swap" 
         rel="stylesheet">
 
-
       <title>{% block title %}{% endblock %}</title>
     </head>
 
@@ -29,7 +28,7 @@
       
       <div class="header">
           
-        <div class="todoIcon">
+        <div class="todoIcon" onclick="openNav()">
           <img src="/static/todoicon.png" alt="To-do lists" >
         </div>
 
@@ -47,9 +46,9 @@
         
       </div>
       
-      
       {% block body %}{% endblock %}
-      
+
+      <script type="text/javascript" src="script.js"></script>
       
     </body>
 </html>

@@ -5,17 +5,28 @@
 {% endblock %}
 
 {% block body %}
-    <div class="containerTimer">
-      <input type="text" placeholder="What do you want to focus on?" />
-      <div class="Timer">
-        <span id="minutes">25</span>:<span id="seconds">00</span>
-      </div>
-      <div class="timerButtons">
-        <button id="start">Start</button>
-        <button id="break">Take a break</button>
-        <button id="continue">Continue</button>
-        <button id="finish">Finish session</button>
+  
+  <div id="myNav" class="containerTodo">
+    <div class="todoContent">
+      <div class="todoArrow" onclick="closeNav()">
+        <img src="/static/todoclose.png" alt="close to-do lists">
       </div>
     </div>
-    <script src="script.js"></script>
+  </div>
+
+
+  <div class="containerTimer">
+    <input type="text" placeholder="What do you want to focus on?" />
+    <div class="Timer">
+      <span id="minutes">25</span>:<span id="seconds">00</span>
+    </div>
+    <div class="timerButtons">
+      <button id="start">Start</button>
+      <button id="break">Take a break</button>
+      <button id="continue">Continue</button>
+      <button id="finish">Finish session</button>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="script.js"></script>
 {% endblock %}
