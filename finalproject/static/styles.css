@@ -15,6 +15,7 @@ body{
 .todoIcon {
     width: 50px;
     height: 16px;
+    visibility: hidden;
 }
 
 .todoIcon img {
@@ -78,7 +79,9 @@ a:link {
     height: 100%;
 }
 
-
+.todoArrow img:hover{
+    cursor: pointer;
+}
 
 /* index.html */
 
