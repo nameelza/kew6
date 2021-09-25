@@ -1,5 +1,6 @@
 import os
 
+import sqlite3
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
 from tempfile import mkdtemp
@@ -39,18 +40,49 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-# db = SQL("sqlite:///project.db")
+db = sqlite3.connect("project.db", check_same_thread=False)
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
 @app.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == "GET":
-        return render_template("register.html")
+def redister():
+    """Register user"""
+
+    if request.method == "POST":
+
+        # Forget any user_id
+        session.clear()
+
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirmation = request.form.get("confirmation")
+
+        if not username or not password or not confirmation:
+            return render_template("register.html", message="Please fill in all fields")
+
+        # Ensure passwords match
+        if password != confirmation:
+            return render_template("register.html", message="Passwords do not match")
+
+        # Query database for username
+        rows = db.execute("SELECT * FROM users WHERE username = ?", [username])
+
+        length = rows.count(with_limit_and_skip=False)
+
+        # Ensure username doesn't already exist
+        if length != 0:
+            return render_template("register.html", message="Username already exists")
+        else:
+            hash = generate_password_hash(password)
+            # Insert data into database
+            db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", [username], [hash])
+
+        # Redirect user to home page
+        return redirect("/")
     else:
-        pass
+        return render_template("register.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

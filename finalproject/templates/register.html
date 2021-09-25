@@ -20,5 +20,10 @@
             <button class="btnPrimary" type="submit">Register</button>
         </form>
         <a href="/login">Log In</a>
+        {% if message %}
+        <div class="alert">{{message}}</div>
+        {% endif %}
     </div>
+    
+    
 {% endblock %}

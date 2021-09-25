@@ -67,11 +67,11 @@ a:link {
 }
 
 .todoArrow {
-    width: 60px;
     height: 20px;
-    float:right;
-    margin-top: 34px;
-    
+    margin-top: 38px;
+    margin-right: 17px;
+    margin-bottom: 10px;
+    text-align: right;
 }
 
 .todoArrow img {
@@ -82,6 +82,23 @@ a:link {
 .todoArrow img:hover{
     cursor: pointer;
 }
+
+.todoContent {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+}
+
+.todoContent ol {
+    list-style: none;
+}
+
+.todoContent ul {
+    list-style: square;
+}
+
+
+
 
 /* index.html */
 
@@ -167,19 +184,38 @@ a:link {
     height: 40px;
     width: 140px;
     margin: 10px 0;
-    background-color: #F3F5FD;
+    background-color: #314FB9;
     border: none;
     border-radius: 4px;
+    color: white;
+    font-family: 'Lato', sans-serif;
+    font-size: 17px;
+    letter-spacing: .7px;
+    font-weight: light;
+}
+
+.btnPrimary:hover {
+    background-color: #213da0;
+    cursor: pointer;
+}
+
+.form a {
     color: #373500;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: .7px;
+    font-weight: light;
+}
+
+.alert {
+    margin: 10px;
     font-family: 'Lato', sans-serif;
     font-size: 16px;
     letter-spacing: .7px;
     font-weight: light;
-    
-}
-
-.btnPrimary:hover {
-    background-color: #F6BF4E;
+    color: red;
+    padding: 10px;
+    background-color: blue;
 }
 
 
