@@ -40,7 +40,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = sqlite3.connect("project.db", check_same_thread=False)
+db = sqlite3.connect("project.db")
 
 @app.route("/")
 def index():
