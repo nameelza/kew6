@@ -24,7 +24,6 @@ def login_required(f):
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['SQLACHEMY_DATABASE_URI'] = 'sqlite:///Users/nameelza/Documents/cs50x/finalproject/database.db'
 
-
 # Ensure responses aren't cached
 @app.after_request
 def after_request(response):
@@ -32,7 +31,6 @@ def after_request(response):
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
     return response
-
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_FILE_DIR"] = mkdtemp()
