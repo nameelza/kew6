@@ -1,12 +1,15 @@
 import os
-
 import sqlite3
+from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
+
+# Configure application
+app = Flask(__name__)
 
 # Login_required decorator
 def login_required(f):
@@ -17,11 +20,9 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# Configure application
-app = Flask(__name__)
-
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config['SQLACHEMY_DATABASE_URI'] = 'sqlite:///Users/nameelza/Documents/cs50x/finalproject/database.db'
 
 
 # Ensure responses aren't cached
@@ -40,7 +41,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = sqlite3.connect("project.db")
+db = SQLAlchemy(app)
+
 
 @app.route("/")
 def index():
