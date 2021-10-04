@@ -1,13 +1,28 @@
 import os
 from flask import Flask, redirect, render_template, request, session, url_for
+from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
+from datetime import datetime
 
 # Configure application
 app = Flask(__name__)
+
+# Ensure templates are auto-reloaded
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///fproject.db"
+
+# Initialize database
+db = SQLAlchemy(app)
+
+# Create db model
+class Users(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    hash = db.Column(db.String(200), nullable=False)
 
 # Login_required decorator
 def login_required(f):
@@ -18,8 +33,7 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# Ensure templates are auto-reloaded
-app.config["TEMPLATES_AUTO_RELOAD"] = True
+
 
 # Ensure responses aren't cached
 @app.after_request
