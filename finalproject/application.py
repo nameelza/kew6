@@ -41,6 +41,8 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = SQLAlchemy(app)
 
+from models import users
+
 
 @app.route("/")
 def index():
@@ -97,6 +99,9 @@ def account():
         return render_template("account.html")
     else:
         pass
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
 
 
