@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Octopus
+{% endblock %}
+
+{% block body %}
+  
+  <div id="myNav" class="containerTodo">
+    <div class="todoContent">
+      <div class="todoArrow">
+        <img src="/static/todoclose.png" alt="close to-do lists" id="buttonClose">
+      </div>
+      <div class="todoLists">
+        <ol>
+          <li>Biology</li>
+            <ul>
+              <li>read the paper</li>
+              <li>ideas for project</li>
+              <li>research</li>
+            </ul>
+          <li>Chemistry</li>
+            <ul>
+              <li>read the paper</li>
+              <li>ideas for project</li>
+              <li>research</li>
+            </ul>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="containerTimer">
+    <input type="text" placeholder="What do you want to focus on?" />
+    <div class="Timer">
+      <span id="minutes">25</span>:<span id="seconds">00</span>
+    </div>
+    <div class="timerButtons">
+      <button class ="btnPrimary" id="start">Start</button>
+      <button class ="btnPrimary" id="break">Take a break</button>
+      <button class ="btnPrimary" id="continue">Continue</button>
+      <button class ="btnPrimary" id="finish">Finish session</button>
+    </div>
+  </div>
+
+  <script src="static/index.js"></script>
+  
+{% endblock %}
