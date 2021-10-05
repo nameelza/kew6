@@ -27,7 +27,7 @@ class Users(db.Model):
 
     # Create a function to return a string when we add something to the database
     def __repr__(self):
-        return '<Username %r>' % self.id
+        return '<Username %r>' % self.username
 
 # Login_required decorator
 def login_required(f):
@@ -70,6 +70,7 @@ def redister():
         password = request.form.get("password")
         confirmation = request.form.get("confirmation")
 
+        # Ensure everything is filled out
         if not username or not password or not confirmation:
             return render_template("register.html", message="Please fill in all fields")
 
@@ -86,7 +87,7 @@ def redister():
         try:
             db.session.add(new_user)
             db.session.commit()
-            return render_template("login.html", message="Registration successful")
+            return render_template("register.html", message="Registration successful")
         except:
             return render_template("register.html", message="Something went wrong")
 
