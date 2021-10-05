@@ -14,6 +14,7 @@ app = Flask(__name__)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///fproject.db"
+app.config["SESSION_TYPE"] = "filesystem"
 
 # Initialize database
 db = SQLAlchemy(app)
@@ -24,6 +25,10 @@ class Users(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     hash = db.Column(db.String(200), nullable=False)
 
+    # Create a function to return a string when we add something to the database
+    def __repr__(self):
+        return '<Username %r>' % self.id
+
 # Login_required decorator
 def login_required(f):
     @wraps(f)
@@ -32,8 +37,6 @@ def login_required(f):
             return redirect(url_for('login', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
-
-
 
 # Ensure responses aren't cached
 @app.after_request
@@ -47,6 +50,7 @@ def after_request(response):
 app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 
 @app.route("/")
@@ -73,21 +77,19 @@ def redister():
         if password != confirmation:
             return render_template("register.html", message="Passwords do not match")
 
-        # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", [username])
-
-        length = rows.count(with_limit_and_skip=False)
-
-        # Ensure username doesn't already exist
-        if length != 0:
+        # Ensure username is unique
+        if db.session.query(Users).filter(Users.username == username).count() > 0:
             return render_template("register.html", message="Username already exists")
-        else:
-            hash = generate_password_hash(password)
-            # Insert data into database
-            db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", [username], [hash])
 
-        # Redirect user to home page
-        return redirect("/")
+        # Add new user to database
+        new_user = Users(username=username, hash=generate_password_hash(password))
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            return render_template("login.html", message="Registration successful")
+        except:
+            return render_template("register.html", message="Something went wrong")
+
     else:
         return render_template("register.html")
 
@@ -104,3 +106,7 @@ def account():
         return render_template("account.html")
     else:
         pass
+
+if __name__ == '__main__':
+    app.debug = True
+    app.run()
