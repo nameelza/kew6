@@ -120,10 +120,15 @@ def login():
 
 @app.route("/account", methods=["GET", "POST"])
 def account():
-    if request.method == "GET":
-        return render_template("account.html")
+    if request.method == "POST":
+        # Forget any user_id
+        session.clear()
+        return redirect("/")
     else:
-        pass
+        # display username of the user
+        user = db.session.query(Users).filter(Users.id == session["user_id"]).first()
+        return render_template("account.html", username=user.username)
+
 
 @app.route("/logout")
 def logout():
