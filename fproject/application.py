@@ -96,10 +96,27 @@ def redister():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "GET":
-        return render_template("login.html")
+    if request.method == "POST":
+
+            # Forget any user_id
+            session.clear()
+    
+            # Ensure username was submitted
+            username = request.form.get("username")
+            password = request.form.get("password")
+    
+            # Ensure username exists and password is correct
+            user = db.session.query(Users).filter(Users.username == username).first()
+            if not user or not check_password_hash(user.hash, password):
+                return render_template("login.html", message="Invalid username and/or password")
+
+            # Remember which user has logged in
+            session["user_id"] = user.id
+    
+            # Redirect user to home page
+            return redirect("/") 
     else:
-        pass
+        return render_template("login.html")
 
 @app.route("/account", methods=["GET", "POST"])
 def account():
@@ -107,6 +124,17 @@ def account():
         return render_template("account.html")
     else:
         pass
+
+@app.route("/logout")
+def logout():
+    """Log user out"""
+
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")
+
 
 if __name__ == '__main__':
     app.debug = True
