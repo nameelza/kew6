@@ -128,6 +128,7 @@ def account():
         # display username of the user
         user = db.session.query(Users).filter(Users.id == session["user_id"]).first()
         return render_template("account.html", username=user.username)
+        
 
 
 @app.route("/logout")

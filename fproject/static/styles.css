@@ -134,6 +134,37 @@ a:link {
     color: transparent;
 }
 
+.timer {
+    align-items: center;
+    display: flex;
+}
+
+.timer input {
+    border: none;
+    color: #373500;
+    font-size: 36px;
+    height: 43px;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    letter-spacing: .7px;
+}
+
+.timer p {
+    color: #373500;
+    font-size: 36px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.timer input::-webkit-outer-spin-button,
+.timer input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.timer input[type=number] {
+  -moz-appearance: textfield;
+}
 
 /* Register & Login */
 
@@ -224,6 +255,6 @@ a:link {
 /* Account.html */
 
 .accountContent  {
-    float: center;
+    margin: 0px 400px;
 }
 
