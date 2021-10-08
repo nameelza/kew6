@@ -166,6 +166,18 @@ a:link {
   -moz-appearance: textfield;
 }
 
+#finish {
+    display: none;
+}
+
+#break {
+    display: none;
+}
+
+#continue{
+    display: none;
+}
+
 /* Register & Login */
 
 .form {
