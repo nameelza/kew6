@@ -149,6 +149,10 @@ a:link {
     letter-spacing: .7px;
 }
 
+.timer input:disabled {
+    background-color: #FFFFFF;
+}
+
 .timer p {
     color: #373500;
     font-size: 36px;

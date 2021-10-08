@@ -24,6 +24,8 @@ start.addEventListener("click", function() {
         start.style.display = "none";
         brk.style.display = "block";
         finish.style.display = "block";
+        document.getElementById("minutes").disabled = true;
+        document.getElementById("seconds").disabled = true;
     }
 });
 
@@ -43,6 +45,19 @@ cntn.addEventListener("click", function() {
     brk.style.display = "block";
     finish.style.display = "block";
     cntn.style.display = "none";
+});
+
+finish.addEventListener("click", function() {
+    timerIsOn = 0;
+    clearInterval(t);
+    start.style.display = "block";
+    brk.style.display = "none";
+    finish.style.display = "none";
+    cntn.style.display = "none";
+    m.value = "25";
+    s.value = "00";
+    document.getElementById("minutes").disabled = false;
+    document.getElementById("seconds").disabled = false;
 });
 
 
