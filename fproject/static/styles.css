@@ -95,10 +95,8 @@ a:link {
 
 .todoContent ul {
     list-style: square;
+    justify-content: space-evenly;
 }
-
-
-
 
 /* index.html */
 
@@ -190,6 +188,17 @@ a:link {
     display: none;
 }
 
+.timerButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#break, #continue {
+    margin-right: 15px;
+}
+
+
 /* timer shape */
 
 .circles{
@@ -231,8 +240,8 @@ a:link {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 10px 0 20px 0; 
 }
-
 
 
 /* Register & Login */
