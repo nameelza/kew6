@@ -137,20 +137,28 @@ a:link {
 .timer {
     align-items: center;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 100;
+    top: 0;
+    left: 0;
 }
 
 .timer input {
     border: none;
     color: #373500;
     font-size: 36px;
+    font-weight: semibold;
     height: 43px;
     text-align: center;
     font-family: 'Lato', sans-serif;
     letter-spacing: .7px;
+    background-color: white;
 }
 
 .timer input:disabled {
-    background-color: #FFFFFF;
+    background-color: white;
 }
 
 .timer p {
@@ -181,6 +189,51 @@ a:link {
 #continue{
     display: none;
 }
+
+/* timer shape */
+
+.circles{
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    z-index: -100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bigcircle {
+    width: 200px;
+    height: 200px;
+    background: #F3F5FD;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+}
+
+.smallcircle {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #F6BF4E;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.wrapper{
+    position: relative;
+    width: 220px;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 /* Register & Login */
 

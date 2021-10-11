@@ -33,10 +33,18 @@
 
   <div class="containerTimer">
     <input type="text" placeholder="What do you want to focus on?" />
+    <div class="wrapper">
+      <div class="circles">
+        <div class="bigcircle"></div>
+        <div class="smallcircle"></div>
+      </div>
 
-    <div class="timer">
-      <input id="minutes" type="number" min="0" max="60" value="25"><p id="semicolon">:</p><input id="seconds" type="number" min="0" max="59" value="00">
+      <div class="timer">
+        <input id="minutes" type="number" min="0" max="60" value="25"><p id="semicolon">:</p><input id="seconds" type="number" min="0" max="59" value="00">
+      </div>
     </div>
+
+    
 
     <div class="timerButtons">
       <button class ="btnPrimary" id="start">Start</button>
