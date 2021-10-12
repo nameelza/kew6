@@ -18,6 +18,8 @@ let time;
 let timerIsOn = 0;
 let t;
 
+const FULL_DASH_ARRAY = 293;
+
 
 start.addEventListener("click", function() {
     if (!timerIsOn) {
@@ -66,15 +68,15 @@ finish.addEventListener("click", function() {
 function calculateTimeFraction() {
     return time / startTime;
 }
-      
+
 // Update the dasharray value as time passes, starting with 283
 function setCircleDasharray() {
+    console.log(time);
+    console.log(startTime);
     const circleDasharray = `${(
         calculateTimeFraction() * FULL_DASH_ARRAY
-    ).toFixed(0)} 292`;
-    document
-        .getElementById("circle")
-        .setAttribute("stroke-dasharray", circleDasharray);
+    ).toFixed(0)} 293`;
+    document.querySelector(".circleProgress").style.strokeDasharray = circleDasharray;
 }
 
 
@@ -83,7 +85,8 @@ function startTimer() {
     time--;
     let minutes = Math.floor(time / 60);
     let seconds = time % 60;
-    setCircleDasharray();
+    
+    
 
     if (minutes < 10) {
     m.value = "0" + minutes;
@@ -97,7 +100,22 @@ function startTimer() {
     } 
     else {
         s.value = seconds;
-    }  
+    }
+
+    // If time is up, stop the timer and display the start button.
+    if (time < 0) {
+        timerIsOn = 0;
+        clearInterval(t);
+        start.style.display = "block";
+        brk.style.display = "none";
+        finish.style.display = "none";
+        cntn.style.display = "none";
+        m.value = "25";
+        s.value = "00";
+        document.getElementById("minutes").disabled = false;
+        document.getElementById("seconds").disabled = false;
+    }
+    
     
 }
 
