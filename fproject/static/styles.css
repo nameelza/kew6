@@ -146,8 +146,8 @@ a:link {
 .timer input {
     border: none;
     color: #373500;
-    font-size: 36px;
-    font-weight: semibold;
+    font-size: 40px;
+    font-weight: bold;
     height: 43px;
     text-align: center;
     font-family: 'Lato', sans-serif;
@@ -219,7 +219,29 @@ a:link {
     position: absolute;
     top: 0;
     left: 0;
-    
+}
+
+/* @-webkit-keyframes  */
+
+.wrapper{
+    position: relative;
+    width: 220px;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0 20px 0; 
+}
+
+.bigcircle2 {
+    width: 200px;
+    height: 200px;
+    background: #314FB9;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* -webkit-animation:  */
 }
 
 .smallcircle {
@@ -231,16 +253,10 @@ a:link {
     top: 0;
     left: 0;
     z-index: 10;
-}
-
-.wrapper{
-    position: relative;
-    width: 220px;
-    height: 220px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0 20px 0; 
+    animation-name: rotate;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
 
 
