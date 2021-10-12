@@ -34,18 +34,19 @@
   <div class="containerTimer">
     <input type="text" placeholder="What do you want to focus on?" />
     <div class="wrapper">
-      <div class="circles">
-        <div class="bigcircle"></div>
-        <div class="bigcircle2"></div>
-        <div class="smallcircle"></div>
-      </div>
+        <div class="bigcircle">
+          <div class="smallcircle">
+            <div class="timer">
+              <input id="minutes" type="number" min="0" max="60" value="25"><p id="semicolon">:</p><input id="seconds" type="number" min="0" max="59" value="00">
+            </div>
+          </div>
+        </div>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+          <circle class="circleProgress" cx="50" cy="50" r="46.5" />
+        </svg>
 
-      <div class="timer">
-        <input id="minutes" type="number" min="0" max="60" value="25"><p id="semicolon">:</p><input id="seconds" type="number" min="0" max="59" value="00">
-      </div>
     </div>
-
-    
 
     <div class="timerButtons">
       <button class ="btnPrimary" id="start">Start</button>

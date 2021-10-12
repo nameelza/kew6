@@ -3,15 +3,17 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector(".todoIcon").style.visibility = "visible";
   });
 
-// 
-let start = document.getElementById("start");
-let brk = document.getElementById("break");
-let cntn = document.getElementById("continue");
-let finish = document.getElementById("finish");
+
+// Timer
+const start = document.getElementById("start");
+const brk = document.getElementById("break");
+const cntn = document.getElementById("continue");
+const finish = document.getElementById("finish");
 
 let m = document.getElementById("minutes");
 let s = document.getElementById("seconds");
 
+const startTime = parseInt(m.value, 10) * 60 + parseInt(s.value, 10);
 let time;
 let timerIsOn = 0;
 let t;
@@ -60,6 +62,20 @@ finish.addEventListener("click", function() {
     document.getElementById("seconds").disabled = false;
 });
 
+// Divides time left by the defined time limit.
+function calculateTimeFraction() {
+    return time / startTime;
+}
+      
+// Update the dasharray value as time passes, starting with 283
+function setCircleDasharray() {
+    const circleDasharray = `${(
+        calculateTimeFraction() * FULL_DASH_ARRAY
+    ).toFixed(0)} 292`;
+    document
+        .getElementById("circle")
+        .setAttribute("stroke-dasharray", circleDasharray);
+}
 
 
 function startTimer() {
@@ -67,18 +83,22 @@ function startTimer() {
     time--;
     let minutes = Math.floor(time / 60);
     let seconds = time % 60;
+    setCircleDasharray();
 
     if (minutes < 10) {
-      m.value = "0" + minutes;
-  } else {
-      m.value = minutes;
-  }
+    m.value = "0" + minutes;
+    } 
+    else {
+    m.value = minutes;
+    }
 
     if (seconds < 10) {
         s.value = "0" + seconds;
-  } else {
+    } 
+    else {
         s.value = seconds;
-  }
+    }  
+    
 }
 
 

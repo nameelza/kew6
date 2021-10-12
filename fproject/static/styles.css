@@ -201,15 +201,16 @@ a:link {
 
 /* timer shape */
 
-.circles{
+.wrapper{
     width: 200px;
     height: 200px;
-    position: absolute;
-    z-index: -100;
+    position: relative;
+    margin: 20px 0;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 
 .bigcircle {
     width: 200px;
@@ -217,31 +218,9 @@ a:link {
     background: #F3F5FD;
     border-radius: 50%;
     position: absolute;
-    top: 0;
-    left: 0;
-}
-
-/* @-webkit-keyframes  */
-
-.wrapper{
-    position: relative;
-    width: 220px;
-    height: 220px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 0 20px 0; 
-}
-
-.bigcircle2 {
-    width: 200px;
-    height: 200px;
-    background: #314FB9;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    /* -webkit-animation:  */
 }
 
 .smallcircle {
@@ -252,12 +231,30 @@ a:link {
     border: 2px solid #F6BF4E;
     top: 0;
     left: 0;
-    z-index: 10;
-    animation-name: rotate;
-    animation-duration: 5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    box-shadow: 0 0 9px 1px #00000025;
+
 }
+
+svg {
+    z-index: 1;
+}
+
+circle {
+    fill: none;
+    stroke: #314FB9;
+    stroke-width: 6.5px;
+    stroke-dasharray: 73 292;
+    /* stroke-linecap: round; */
+    transform: rotate(270deg);
+    transform-origin: center;
+    transition: 1s linear all;
+
+}
+
 
 
 /* Register & Login */
