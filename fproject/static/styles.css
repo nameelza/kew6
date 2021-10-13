@@ -247,14 +247,13 @@ circle {
     fill: none;
     stroke: #314FB9;
     stroke-width: 6.5px;
-    stroke-dasharray: 0 293;
-    /* stroke-linecap: round; */
+    stroke-dasharray: 0, 293;
+    stroke-linecap: round;
     transform: rotate(270deg);
     transform-origin: center;
     transition: 1s linear all;
 
 }
-
 
 
 /* Register & Login */
