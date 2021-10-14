@@ -73,9 +73,6 @@ function calculateTimeFraction() {
 
 // Update the dasharray value as time passes, starting with 283
 function setCircleDasharray() {
-  // const circleDasharray = `${(
-  //     calculateTimeFraction() * FULL_DASH_ARRAY
-  // ).toFixed(0)} 293`;
   const circleDasharray = `${calculateTimeFraction().toFixed(0)} 293`;
   document.querySelector(".circleProgress").style.strokeDasharray =
     circleDasharray;
