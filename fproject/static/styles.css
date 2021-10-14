@@ -342,10 +342,11 @@ circle {
     border: 1px solid #b1dbe5;;
 }
 
+
 /* Account.html */
 
 .accountContent  {
-    margin: 80px 0 0 0;
+    margin: 40px 0 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -356,18 +357,60 @@ circle {
     color: #F6BF4E;
     font-family: 'Spectral', serif;
     font-size: 48px;
-    font-weight: extra-bold;
-    margin-top: 0;
+    font-weight: 700;
+    margin-top: -10px;
+
 }
 
 .accountHeader p {
     color: #373500;
     font-family: 'Lato', sans-serif;
-    font-size: 22px;
+    font-size: 24px;
     padding-left: 4px;
     margin-bottom: 0;
+    font-weight: 300;
+}
+
+.historyContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#weekday {
+    color: #373500;
+    font-family: 'Lato', sans-serif;
+    font-size: 24px;
     font-weight: 400;
 }
 
+#date {
+    color: #5D7889;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+}
+
+.totalTimer {
+    color: #314FB9;
+    font-family: 'Spectral', serif;
+    font-size: 36px;
+    font-weight: 800;
+    margin: 20px 0 15px 0;
+}
+
+table {
+    width: 100%;
+}
+
+table td {
+    height: 28px;
+    color: #373500;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+}
+
+table td:last-child {
+    padding-left: 180px;
+}
 
 
