@@ -64,6 +64,7 @@ finish.addEventListener("click", function () {
   s.value = "00";
   document.getElementById("minutes").disabled = false;
   document.getElementById("seconds").disabled = false;
+  document.querySelector(".circleProgress").style.strokeDasharray="0, 293";
 });
 
 // Divides time left by the defined time limit.
@@ -102,13 +103,7 @@ function startTimer() {
   if (time < 0) {
     timerIsOn = 0;
     clearInterval(t);
-    start.style.display = "block";
-    brk.style.display = "none";
-    finish.style.display = "none";
-    cntn.style.display = "none";
-    m.value = "25";
+    m.value = "00";
     s.value = "00";
-    document.getElementById("minutes").disabled = false;
-    document.getElementById("seconds").disabled = false;
   }
 }
