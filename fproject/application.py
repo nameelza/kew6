@@ -119,6 +119,7 @@ def login():
         return render_template("login.html")
 
 @app.route("/account", methods=["GET", "POST"])
+@login_required
 def account():
     if request.method == "POST":
         # Forget any user_id
@@ -132,6 +133,7 @@ def account():
 
 
 @app.route("/logout")
+@login_required
 def logout():
     """Log user out"""
 
