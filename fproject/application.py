@@ -25,9 +25,18 @@ class Users(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     hash = db.Column(db.String(200), nullable=False)
 
-    # Create a function to return a string when we add something to the database
     def __repr__(self):
-        return '<Username %r>' % self.username
+        return "<User %r>" % self.username
+
+class Sessions(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    duration = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(50), nullable=False)
+    date = db.Column(db.DateTime, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    def __repr__(self):
+        return "<Session %r>" % self.name
 
 # Login_required decorator
 def login_required(f):
@@ -53,9 +62,12 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    if request.method == "POST":
+        pass
+    else:
+        return render_template("index.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def redister():
@@ -145,5 +157,5 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run()
+    db.create_all()
+    app.run(debug=True)

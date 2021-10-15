@@ -155,7 +155,7 @@ a:link {
     background-color: white;
 }
 
-.timer input:disabled {
+.containerTimer input:disabled {
     background-color: white;
 }
 

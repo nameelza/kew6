@@ -32,6 +32,7 @@ start.addEventListener("click", function () {
     finish.style.display = "block";
     document.getElementById("minutes").disabled = true;
     document.getElementById("seconds").disabled = true;
+    document.getElementById("timerInput").disabled = true;
   }
 });
 
@@ -65,11 +66,12 @@ finish.addEventListener("click", function () {
   document.getElementById("minutes").disabled = false;
   document.getElementById("seconds").disabled = false;
   document.querySelector(".circleProgress").style.strokeDasharray="0, 293";
+  document.getElementById("timerInput").disabled = false;
 });
 
 // Divides time left by the defined time limit.
 function calculateTimeFraction() {
-  return ((startTime - time) * 293) / startTime;
+  return ((startTime + 0.5 - time) * 293) / startTime;
 }
 
 // Update the dasharray value as time passes, starting with 283
