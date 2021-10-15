@@ -33,6 +33,9 @@ start.addEventListener("click", function () {
     document.getElementById("minutes").disabled = true;
     document.getElementById("seconds").disabled = true;
     document.getElementById("timerInput").disabled = true;
+    if (document.getElementById("timerInput").value === "") {
+      document.getElementById("timerInput").value = " ";
+    }
   }
 });
 
@@ -67,6 +70,7 @@ finish.addEventListener("click", function () {
   document.getElementById("seconds").disabled = false;
   document.querySelector(".circleProgress").style.strokeDasharray="0, 293";
   document.getElementById("timerInput").disabled = false;
+  document.getElementById("timerInput").value = "";
 });
 
 // Divides time left by the defined time limit.
