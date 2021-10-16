@@ -7,6 +7,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
 from datetime import datetime
+import simplejson as json
 
 # Configure application
 app = Flask(__name__)
@@ -65,7 +66,20 @@ Session(app)
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        pass
+        data = json.loads(request.data)
+        if data["name"] == "":
+            name = "-"
+        else:
+            name = data.get("name")
+
+        if session["user_id"] is None:
+            return redirect("/")
+        date = datetime.now()
+        duration = data.get("duration")
+
+        new_session = Sessions(name=name, duration=duration, date=date, user_id=session["user_id"])
+        db.session.add(new_session)
+        db.session.commit()
     else:
         return render_template("index.html")
 
@@ -140,7 +154,10 @@ def account():
     else:
         # display username of the user
         user = db.session.query(Users).filter(Users.id == session["user_id"]).first()
-        return render_template("account.html", username=user.username)
+        print(user.username)
+        sessions = db.session.query(Sessions).filter(Sessions.user_id == session["user_id"]).all()
+        print(sessions[0].name)
+        return render_template("account.html", username=user.username, sessions=sessions)
         
 
 

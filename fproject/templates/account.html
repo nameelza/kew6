@@ -5,42 +5,25 @@
 {% endblock %}
 
 {% block body %}
+
     <div class="accountContent">
         <div class="accountHeader">
             <p>Hi, {{username}}!</p>
             <h1>Keep up the good work</h1>
         </div>
 
-        <!-- <div class="historyContent">
-            <div id="weekday">Today</div>
-            <div id="date">October, 14</div>
-        </div> -->
-
         <div class="history">Your history</div>
 
         <div class="historyTable">
             <table id = "history">
                 <tbody>
+                    {% for session in sessions%}
                     <tr>
-                        <td>October, 10</td>
-                        <td>42m</td>
-                        <td>Reviews </td>
+                        <td>{{session.date}}</td>
+                        <td>{{session.duration}}</td>
+                        <td>{{session.name}}</td>
                     </tr>
-                    <tr>
-                        <td>October, 10</td>
-                        <td>30m</td>
-                        <td>Biology </td>
-                    </tr>
-                    <tr>
-                        <td>October, 10</td>
-                        <td>20m</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>October, 9</td>
-                        <td>41m</td>
-                        <td>Math</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

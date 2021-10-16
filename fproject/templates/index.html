@@ -37,7 +37,7 @@
         <div class="bigcircle">
           <div class="smallcircle">
             <div class="timer">
-              <input id="minutes" type="number" min="0" max="60" value="25"><p id="semicolon">:</p><input id="seconds" type="number" min="0" max="59" value="00">
+              <input id="minutes" type="number" min="0" max="60" value="25" name="minutes"><p id="semicolon">:</p><input id="seconds" type="number" min="0" max="59" value="00" name="seconds">
             </div>
           </div>
         </div>
@@ -49,7 +49,7 @@
     </div>
 
     <div class="timerButtons">
-      <button class ="btnPrimary" id="start">Start</button>
+      <button class ="btnPrimary" id="start" type="submit">Start</button>
       <button class ="btnPrimary" id="break">Take a break</button>
       <button class ="btnPrimary" id="continue">Continue</button>
       <button class ="btnPrimary" id="finish">Finish session</button>
@@ -58,5 +58,6 @@
   </div>
 
   <script src="static/index.js"></script>
-  
+  <script src="static/todolists.js"></script>
+
 {% endblock %}

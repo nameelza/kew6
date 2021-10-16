@@ -71,6 +71,9 @@ finish.addEventListener("click", function () {
   document.querySelector(".circleProgress").style.strokeDasharray="0, 293";
   document.getElementById("timerInput").disabled = false;
   document.getElementById("timerInput").value = "";
+  console.log(startTime);
+  console.log(time);
+  submitSession();
 });
 
 // Divides time left by the defined time limit.
@@ -112,4 +115,19 @@ function startTimer() {
     m.value = "00";
     s.value = "00";
   }
+}
+
+
+// Submit session name and duration to database
+function submitSession() {
+  console.log("Submit session");
+  duration = startTime - time;
+  fetch("/", {
+    method: "POST",
+    body: JSON.stringify({
+      name: document.getElementById("timerInput").value,
+      duration: duration
+    })
+  })
+  console.log("Submitted session");
 }
