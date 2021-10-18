@@ -7,6 +7,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 from functools import wraps
 from datetime import datetime
+import math
 import simplejson as json
 
 # Configure application
@@ -154,9 +155,23 @@ def account():
     else:
         # display username of the user
         user = db.session.query(Users).filter(Users.id == session["user_id"]).first()
-        print(user.username)
-        sessions = db.session.query(Sessions).filter(Sessions.user_id == session["user_id"]).all().order_by(Sessions.date.month.asc())
-        return render_template("account.html", username=user.username, sessions=sessions)
+        sessionsHistory = db.session.query(Sessions).filter(Sessions.user_id == session["user_id"]).order_by(Sessions.id.desc())
+        for sessionRow in sessionsHistory:
+            hours = math.floor(sessionRow.duration / 3600)
+            minutes = math.floor((sessionRow.duration % 3600) / 60)
+            seconds = (sessionRow.duration % 3600) % 60
+            print(sessionRow.duration)
+            print(hours)
+            print(minutes)
+            print(seconds)
+            if hours == 0 and minutes == 0:
+                sessionRow.duration = str(seconds) + "s"
+            elif hours == 0:
+                sessionRow.duration = str(minutes) + "m " + str(seconds) + "s"
+            else:
+                sessionRow.duration = str(hours) + "h " + str(minutes) + "m"
+        
+        return render_template("account.html", username=user.username, sessions=sessionsHistory)
         
 
 
