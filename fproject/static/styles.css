@@ -350,7 +350,6 @@ circle {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
 }
 
 .accountHeader h1 {
@@ -376,18 +375,6 @@ circle {
     align-items: center;
 }
 
-#weekday {
-    color: #373500;
-    font-family: 'Lato', sans-serif;
-    font-size: 24px;
-    font-weight: 400;
-}
-
-#date {
-    color: #5D7889;
-    font-family: 'Lato', sans-serif;
-    font-size: 20px;
-}
 
 .totalTimer {
     color: #314FB9;
@@ -403,6 +390,7 @@ circle {
     font-size: 24px;
     font-weight: 400;
     margin-bottom: 15px;
+    margin-top: 10px;
 }
 
 table {
@@ -422,6 +410,12 @@ table tr {
     border-bottom: 1px solid #ddd;
 }
 
+#noSessionsMessage {
+    color: #ccc9c9;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+}
     
 
 

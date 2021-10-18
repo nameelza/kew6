@@ -17,6 +17,7 @@
         <div class="historyTable">
             <table id = "history">
                 <tbody>
+                    <div id="noSessionsMessage">{{message}}</div>
                     {% for session in sessions%}
                     <tr>
                         <td>{{session.date.day}}/{{session.date.month}}/{{session.date.year}}</td>

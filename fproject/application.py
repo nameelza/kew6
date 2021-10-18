@@ -160,10 +160,6 @@ def account():
             hours = math.floor(sessionRow.duration / 3600)
             minutes = math.floor((sessionRow.duration % 3600) / 60)
             seconds = (sessionRow.duration % 3600) % 60
-            print(sessionRow.duration)
-            print(hours)
-            print(minutes)
-            print(seconds)
             if hours == 0 and minutes == 0:
                 sessionRow.duration = str(seconds) + "s"
             elif hours == 0:
@@ -171,7 +167,10 @@ def account():
             else:
                 sessionRow.duration = str(hours) + "h " + str(minutes) + "m"
         
-        return render_template("account.html", username=user.username, sessions=sessionsHistory)
+        if sessionsHistory.count() == 0:
+            return render_template("account.html", username=user.username, sessionsHistory=sessionsHistory, message = "No finished sessions yet")
+        else:
+            return render_template("account.html", username=user.username, sessionsHistory=sessionsHistory)
         
 
 
