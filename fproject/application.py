@@ -155,8 +155,7 @@ def account():
         # display username of the user
         user = db.session.query(Users).filter(Users.id == session["user_id"]).first()
         print(user.username)
-        sessions = db.session.query(Sessions).filter(Sessions.user_id == session["user_id"]).all()
-        print(sessions[0].name)
+        sessions = db.session.query(Sessions).filter(Sessions.user_id == session["user_id"]).all().order_by(Sessions.date.month.asc())
         return render_template("account.html", username=user.username, sessions=sessions)
         
 

@@ -19,7 +19,7 @@
                 <tbody>
                     {% for session in sessions%}
                     <tr>
-                        <td>{{session.date}}</td>
+                        <td>{{session.date.day}}/{{session.date.month}}/{{session.date.year}}</td>
                         <td>{{session.duration}}</td>
                         <td>{{session.name}}</td>
                     </tr>

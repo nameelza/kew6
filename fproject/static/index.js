@@ -60,6 +60,7 @@ cntn.addEventListener("click", function () {
 finish.addEventListener("click", function () {
   timerIsOn = 0;
   clearInterval(t);
+  submitSession();
   start.style.display = "block";
   brk.style.display = "none";
   finish.style.display = "none";
@@ -73,7 +74,6 @@ finish.addEventListener("click", function () {
   document.getElementById("timerInput").value = "";
   console.log(startTime);
   console.log(time);
-  submitSession();
 });
 
 // Divides time left by the defined time limit.
