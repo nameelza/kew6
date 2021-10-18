@@ -32,12 +32,16 @@
 
 
   <div class="containerTimer">
-    <input id="timerInput" type="text" placeholder="What do you want to focus on?" value="" />
+    <input id="timerInput" type="text" placeholder="What do you want to focus on?" value="" maxlength="29"/>
     <div class="wrapper">
         <div class="bigcircle">
           <div class="smallcircle">
             <div class="timer">
-              <input id="minutes" type="number" min="0" max="60" value="25" name="minutes"><p id="semicolon">:</p><input id="seconds" type="number" min="0" max="59" value="00" name="seconds">
+              <input id="minutes" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number"
+              maxlength = "2" min="0" max="60" value="25" name="minutes">
+              <p id="semicolon">:</p>
+              <input id="seconds" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number"
+              maxlength = "2" min="0" max="59" value="00" name="seconds">
             </div>
           </div>
         </div>

@@ -156,6 +156,7 @@ def account():
         # display username of the user
         user = db.session.query(Users).filter(Users.id == session["user_id"]).first()
         sessionsHistory = db.session.query(Sessions).filter(Sessions.user_id == session["user_id"]).order_by(Sessions.id.desc())
+        print(sessionsHistory.count())
         for sessionRow in sessionsHistory:
             hours = math.floor(sessionRow.duration / 3600)
             minutes = math.floor((sessionRow.duration % 3600) / 60)
@@ -168,9 +169,9 @@ def account():
                 sessionRow.duration = str(hours) + "h " + str(minutes) + "m"
         
         if sessionsHistory.count() == 0:
-            return render_template("account.html", username=user.username, sessionsHistory=sessionsHistory, message = "No finished sessions yet")
+            return render_template("account.html", username=user.username, message = "No finished sessions yet")
         else:
-            return render_template("account.html", username=user.username, sessionsHistory=sessionsHistory)
+            return render_template("account.html", username=user.username, sessions=sessionsHistory)
         
 
 
