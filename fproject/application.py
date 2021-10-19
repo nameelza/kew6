@@ -40,6 +40,15 @@ class Sessions(db.Model):
     def __repr__(self):
         return "<Session %r>" % self.name
 
+class Todolist(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40), nullable=False)
+    complete = db.Column(db.Boolean, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    def __repr__(self):
+        return "<Todolist %r>" % self.name
+
 # Login_required decorator
 def login_required(f):
     @wraps(f)

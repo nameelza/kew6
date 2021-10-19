@@ -96,9 +96,6 @@ a:link {
 .todoContent ul {
     list-style: none;
 }
-.todoContent li:checked {
-    margin-right: 25px;
-}
 
 .todoContent input[type="text"] {
     font-size: 18px;
@@ -107,12 +104,24 @@ a:link {
     color: #5D7889;
     border: none;
     background-color: #F8F6F3;
+    margin-left: -6px;
 }
 
 .todoContent input[type="text"]::placeholder {
     color: #AEACAA;
 }
 
+.todoContent input:focus {
+    outline: none;
+}
+
+.todoContent input:focus::placeholder {
+    color: transparent;
+}
+
+.todoContent input[type="checkbox"]{
+    margin-right: 10px;
+}
 
 /* index.html */
 
