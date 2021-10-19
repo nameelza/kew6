@@ -86,17 +86,33 @@ a:link {
 .todoContent {
     display: flex;
     flex-direction: column;
-    margin-left: 30px;
-}
-
-.todoContent ol {
-    list-style: none;
+    margin-left: 20px;
+    font-size: 18px;
+    font-family: 'Lato', sans-serif;
+    letter-spacing: .7px;
+    color: #5D7889
 }
 
 .todoContent ul {
-    list-style: square;
-    justify-content: space-evenly;
+    list-style: none;
 }
+.todoContent li:checked {
+    margin-right: 25px;
+}
+
+.todoContent input[type="text"] {
+    font-size: 18px;
+    font-family: 'Lato', sans-serif;
+    letter-spacing: .7px;
+    color: #5D7889;
+    border: none;
+    background-color: #F8F6F3;
+}
+
+.todoContent input[type="text"]::placeholder {
+    color: #AEACAA;
+}
+
 
 /* index.html */
 

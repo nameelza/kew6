@@ -12,20 +12,20 @@
         <img src="/static/todoclose.png" alt="close to-do lists" id="buttonClose">
       </div>
       <div class="todoLists">
-        <ol>
-          <li>Biology</li>
             <ul>
-              <li>read the paper</li>
-              <li>ideas for project</li>
-              <li>research</li>
+              <li><input type="checkbox">The paper</li>
+              <li><input type="checkbox">Ideas for project</li>
+              <li><input type="checkbox">Research</li>
+
+              <form action="/todolist" method="POST">
+                <input type="checkbox">
+                <input type="text" type="checkbox" name="todoItem" placeholder="Add a new task">
+                <button type="submit">Add</button>
+              </form>
             </ul>
-          <li>Chemistry</li>
-            <ul>
-              <li>read the paper</li>
-              <li>ideas for project</li>
-              <li>research</li>
-            </ul>
-        </ol>
+
+            
+            
       </div>
     </div>
   </div>

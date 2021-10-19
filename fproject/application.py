@@ -172,6 +172,12 @@ def account():
             return render_template("account.html", username=user.username, message = "No finished sessions yet")
         else:
             return render_template("account.html", username=user.username, sessions=sessionsHistory)
+
+@app.route("/todolist")
+def todolist():
+        a = request.form.get("todoItem")
+        return "<h1>{a}</h1>".format(a=a)
+
         
 
 
