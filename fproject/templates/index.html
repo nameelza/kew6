@@ -12,19 +12,52 @@
         <img src="/static/todoclose.png" alt="close to-do lists" id="buttonClose">
       </div>
       <div class="todoLists">
-            <ul>
-              <li><input type="checkbox">The paper</li>
-              <li><input type="checkbox">Ideas for project</li>
-              <li><input type="checkbox">Research</li>
+        <ul>
+          <!-- Show todo tasks from user database -->
+          {% for task in todoTasks%}
+            {% if task.complete == false %}
+              <li>
+                {{task.name}}
+                <a href="/delete/{{task.id}}" ><img id="checkMark" rel="icon" src="/static/delete.png" alt="Account" /></a>
+                <a href="/update/{{task.id}}"><img id="checkMark" rel="icon" src="/static/check-mark.png" alt="Account" /></a>
+              </li>
+            {% else %}
+              <li id="complete" >
+                {{task.name}}
+                <a href="/delete/{{task.id}}" ><img id="checkMark" rel="icon" src="/static/delete.png" alt="Account" /></a>
+                <a href="/update/{{task.id}}"><img id="checkMark" rel="icon" src="/static/check-mark.png" alt="Account" /></a>
+              </li>
+            {% endif %}
+          {% endfor %}
 
-              <form action="/todolist" method="POST">
-                <input type="checkbox" disabled>
-                <input type="text" type="checkbox" name="todoItem" placeholder="Add a new task" autocomplete="off">
-              </form>
-            </ul>
+            {% if user %}
+              <form id="newTaskForm" action="/todolist" method="POST">
+                <input id="submitButton" type="text" maxlength="17" name="todoItem" placeholder="Add a new task" autocomplete="off">
+              </form>   
+            {% else %}
+              <div class="todoListMessage">
+                <li>
+                  Submit final papers
+                  <img id="checkMark" rel="icon" src="/static/delete2.png" alt="Account" />
+                  <img id="checkMark" rel="icon" src="/static/check-mark2.png" alt="Account" />
+                </li>
+                <li>
+                  Text Emma back
+                  <img id="checkMark" rel="icon" src="/static/delete2.png" alt="Account" />
+                  <img id="checkMark" rel="icon" src="/static/check-mark2.png" alt="Account" />
+                </li>
+                <li>
+                  Think of project ideas
+                  <img id="checkMark" rel="icon" src="/static/delete2.png" alt="Account" />
+                  <img id="checkMark" rel="icon" src="/static/check-mark2.png" alt="Account" />
+                </li>
+                <div id="loginMessage"><a href="/register">Create account</a> <br> to start adding your tasks</div>
+              </div>
+            {% endif %}
 
-            
-            
+
+
+        </ul>
       </div>
     </div>
   </div>

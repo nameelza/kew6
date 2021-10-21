@@ -59,8 +59,8 @@ cntn.addEventListener("click", function () {
 
 finish.addEventListener("click", function () {
   timerIsOn = 0;
-  clearInterval(t);
   submitSession();
+  clearInterval(t);
   start.style.display = "block";
   brk.style.display = "none";
   finish.style.display = "none";
@@ -120,7 +120,6 @@ function startTimer() {
 
 // Submit session name and duration to database
 function submitSession() {
-  console.log("Submit session");
   duration = startTime - time;
   fetch("/", {
     method: "POST",
@@ -129,5 +128,4 @@ function submitSession() {
       duration: duration
     })
   })
-  console.log("Submitted session");
 }

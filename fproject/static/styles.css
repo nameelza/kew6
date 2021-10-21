@@ -83,10 +83,10 @@ a:link {
     cursor: pointer;
 }
 
+
 .todoContent {
     display: flex;
     flex-direction: column;
-    margin-left: 20px;
     font-size: 18px;
     font-family: 'Lato', sans-serif;
     letter-spacing: .7px;
@@ -97,6 +97,17 @@ a:link {
     list-style: none;
 }
 
+.todoContent li {
+    width: 250px;
+    margin-bottom: 5px;
+}
+
+
+#complete {
+    text-decoration: line-through;
+}
+
+
 .todoContent input[type="text"] {
     font-size: 18px;
     font-family: 'Lato', sans-serif;
@@ -104,7 +115,7 @@ a:link {
     color: #5D7889;
     border: none;
     background-color: #F8F6F3;
-    margin-left: -6px;
+    margin-left: -2px;
 }
 
 .todoContent input[type="text"]::placeholder {
@@ -123,7 +134,46 @@ a:link {
     margin-right: 10px;
 }
 
+
+#checkMark {
+    width: 15px;
+    height: 15px;
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.todoListMessage {
+    font-size: 18px;
+    text-align: left;
+}
+
+.todoListMessage li {
+    color: #b1c1ca;
+}
+
+#loginMessage {
+    width: 230px;
+    font-size: 18px;
+    margin-top: 40px;
+    color: #314FB9;
+    text-align: center;
+    font-weight: 600;
+}
+
+#loginMessage a {
+    color: #314FB9;
+    text-decoration: underline;
+}
+
+
+
+
 /* index.html */
+
+.containerTodo {
+    width: 300px;
+}
 
 .containerTimer {
     align-items: center;
@@ -443,6 +493,16 @@ table tr {
     font-weight: 400;
 }
 
+#logout {
+    background-color: transparent;
+    color: #314FB9;
+}
+
+#logoutForm {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
 
 
 

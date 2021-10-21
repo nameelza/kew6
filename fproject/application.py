@@ -1,5 +1,6 @@
 import os
 from flask import Flask, redirect, render_template, request, session, url_for
+from flask.scaffold import _matching_loader_thinks_module_is_package
 from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
 from tempfile import mkdtemp
@@ -76,22 +77,31 @@ Session(app)
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
+        if session["user_id"] is None:
+            return redirect("/")
         data = json.loads(request.data)
-        if data["name"] == "":
+        if data["name"] == " " or data["name"] == "":
             name = "-"
         else:
             name = data.get("name")
-
-        if session["user_id"] is None:
-            return redirect("/")
         date = datetime.now()
         duration = data.get("duration")
 
         new_session = Sessions(name=name, duration=duration, date=date, user_id=session["user_id"])
         db.session.add(new_session)
         db.session.commit()
+        return redirect("/")
     else:
-        return render_template("index.html")
+        # display todo tasks
+        # check if user is logged in
+        if session.get("user_id") is None:
+            userLoggedIn = False
+            message = "Login to start creating your todo lists!"
+            return render_template("index.html", message=message, user=userLoggedIn)
+        else:
+            userLoggedIn = True
+            todoTasks = db.session.query(Todolist).filter(Todolist.user_id == session["user_id"]).all()
+            return render_template("index.html", todoTasks=todoTasks, user=userLoggedIn)
 
 @app.route("/register", methods=["GET", "POST"])
 def redister():
@@ -165,7 +175,6 @@ def account():
         # display username of the user
         user = db.session.query(Users).filter(Users.id == session["user_id"]).first()
         sessionsHistory = db.session.query(Sessions).filter(Sessions.user_id == session["user_id"]).order_by(Sessions.id.desc())
-        print(sessionsHistory.count())
         for sessionRow in sessionsHistory:
             hours = math.floor(sessionRow.duration / 3600)
             minutes = math.floor((sessionRow.duration % 3600) / 60)
@@ -182,12 +191,30 @@ def account():
         else:
             return render_template("account.html", username=user.username, sessions=sessionsHistory)
 
-@app.route("/todolist")
+@app.route("/todolist", methods=["POST"])
 def todolist():
-        a = request.form.get("todoItem")
-        return "<h1>{a}</h1>".format(a=a)
+    if request.method == "POST":
+        addTask = request.form.get("todoItem")
+        newTask = Todolist(name=addTask, complete = False, user_id=session["user_id"])
+        db.session.add(newTask)
+        db.session.commit()
+        return redirect("/")
 
-        
+@app.route("/update/<int:task_id>")
+def update(task_id):
+    # delete todo task
+    todo = Todolist.query.filter_by(id=task_id).first()
+    todo.complete = not todo.complete
+    db.session.commit()
+    return redirect("/")
+
+@app.route("/delete/<int:task_id>")
+def delete(task_id):
+    # delete todo task
+    todo = Todolist.query.filter_by(id=task_id).first()
+    db.session.delete(todo)
+    db.session.commit()
+    return redirect("/")
 
 
 @app.route("/logout")
